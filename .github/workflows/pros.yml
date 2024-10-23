@@ -1,0 +1,25 @@
+name: Compile VEX Code with PROS
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install Arm GNU Toolchain (arm-none-eabi-gcc)
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+      with:
+        release: 'latest'
+    - name: Install PROS dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --user pros-cli
+    - name: Clean and compile PROS project
+      run: |
+        export PATH=/home/runner/.local/bin:$PATH
+        pros make all
