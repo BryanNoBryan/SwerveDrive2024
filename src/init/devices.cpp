@@ -3,6 +3,12 @@
 // Controllers
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
+// Drivetrain encoders
+pros::Rotation rightFrontEncoder(9);
+pros::Rotation leftFrontEncoder(10);
+pros::Rotation leftBackEncoder(11);
+pros::Rotation rightBackEncoder(12);
+
 // Drivetrain motors
 // In each swerve wheel there are two motors, one motor has a gear on the top and the other has a gear on the bottom
 // So leftFrontTopMotor would refer to the motor that is in the left and front of the robot and the motor who's gear is on top
@@ -51,4 +57,4 @@ pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::green, pros::v
 
 
 // Sensors
-pros::Imu imu(9);
+pros::Imu imu(20);

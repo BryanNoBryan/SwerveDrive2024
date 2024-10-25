@@ -10,6 +10,12 @@
 // Controllers
 extern pros::Controller controller;
 
+// Drivetrain encoders
+extern pros::Rotation rightFrontEncoder;
+extern pros::Rotation leftFrontEncoder;
+extern pros::Rotation leftBackEncoder;
+extern pros::Rotation rightBackEncoder;
+
 // Drivetrain motors & MotorGroups
 
 // Left Front
