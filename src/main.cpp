@@ -1,6 +1,4 @@
 #include "main.h"
-#include "drive/driveTrain.h"
-#include "driveControl.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -31,7 +29,6 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_center_button);
 
 	pros::lcd::initialize(); // initialize brain screen
-    chassis.calibrate(); // calibrate sensors
 	// pros::Task screen_task([&]() {
     //     while (true) {
     //         // print robot location to the brain screen
@@ -96,16 +93,10 @@ void opcontrol() {
 
 	LiftController::PIDInit();
 	while (true) {
-		// get left y and right x positions
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int leftX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
-
-        // move the robot
-        chassis.arcade(leftY, leftX);
 		LiftController::updatePID();
 		update();
 
         // delay to save resources
-        pros::delay(25);
+        pros::delay(2);
 	}
 }

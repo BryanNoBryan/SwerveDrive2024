@@ -36,6 +36,7 @@
 
 #include "api.h"
 #include "macros/liftController.h"
+#include "driveControl.h"
 #include "auton/matchAuton.h"
 #include "lemlib/api.hpp" // IWYU pragma: keep
 
