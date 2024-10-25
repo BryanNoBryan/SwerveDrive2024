@@ -11,17 +11,19 @@ void update() {
     //swerve drive!!!!
     driveTrain.moveTo(left_x, left_y, right_x, 1);
 
-
-
-
-
-
     if (up) {
-        LiftController::liftUp(0);
-        //as opposed to , which creates a new obj every time
-        //LiftController().liftUp(0);
+        driveTrain.reset_position();
     }
-    if (down) {
-        LiftController::liftDown(0);
-    }
+
+
+
+
+    // if (up) {
+    //     LiftController::liftUp(0);
+    //     //as opposed to , which creates a new obj every time
+    //     //LiftController().liftUp(0);
+    // }
+    // if (down) {
+    //     LiftController::liftDown(0);
+    // }
 }

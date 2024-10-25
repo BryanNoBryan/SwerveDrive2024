@@ -23,6 +23,8 @@ public:
     // anglewrapped [-180, 180], positive is clockwise, zero is straight ahead
     // +x to the right, +y is downfield, power is scalar multiplier
     void moveTo(double x, double y, double angle, double power);
+
+    void reset_position();
 };
 
 extern SwerveDrive driveTrain;

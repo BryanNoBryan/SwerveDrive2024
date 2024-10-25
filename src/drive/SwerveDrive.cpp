@@ -56,6 +56,13 @@ void SwerveDrive::moveTo(double x, double y, double angle, double power)
     rightBack.move(speed4, angle4, power);
 }
 
+void SwerveDrive::reset_position() {
+    rightFront.zero();
+    leftFront.zero();
+    leftBack.zero();
+    rightBack.zero();
+}
+
 SwerveDrive driveTrain;
 
 
