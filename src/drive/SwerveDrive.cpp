@@ -25,8 +25,8 @@ void SwerveDrive::moveTo(double x, double y, double angle, double power)
 {
     double A = x - angle * TRACK_LENGTH / 2;
     double B = x + angle * TRACK_LENGTH / 2;
-    double C = y - angle * TRACK_LENGTH / 2;
-    double D = y + angle * TRACK_LENGTH / 2;
+    double C = y - angle * TRACK_WIDTH / 2;
+    double D = y + angle * TRACK_WIDTH / 2;
     // wheel 1: top right
     // wheel 2: top left
     // wheel 3: bottom left
