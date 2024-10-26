@@ -8,6 +8,7 @@
 void driveControl()
 {
 	int motorSpeedX, motorSpeedY, turnSpeed;
+	double currentHeading, neccesaryHeading;
 
 	while (true)
 	{
