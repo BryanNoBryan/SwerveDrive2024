@@ -8,7 +8,7 @@
 #include "init/utility.h"
 #include "lemlib/chassis/chassis.hpp"
 #include "pros/misc.h"
-#include "drive/drivetrain.h"
+#include "drive/driveTrain.h"
 
 void driveControl();
 

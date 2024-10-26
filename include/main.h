@@ -35,6 +35,10 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "autons/matchAuton.h"
+#include "driveControl.h"
+#include "drive/driveTrain.h"
+
 
 /**
  * You should add more #includes here
