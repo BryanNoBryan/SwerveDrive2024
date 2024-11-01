@@ -8,14 +8,25 @@
 // radius from center to each wheel
 const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
-lemlib::PID testPID (0.01, 0, 0, 10, false);
+lemlib::PID testPID (1, 0, 0, 10, false);
 
+/*
+ LESSON LEARNED:
+    MOTORS MUST BE BY REFERENCE
+
+    NEXT TARGET:
+    ENCODERS OUTPUT A CONSTANT VALUE
+    POTENTIALLY HAVE TO DO ENCODER BY REFERENCE TOO
+    HOWEVER, I DID IT REFERENCE THE SAME WAY AS WITH MOTORS, BUT GIVE DAEMON ERRORS
+    Strangely it compiles fine, therefore it is a runtime error
+
+*/
 
 SwerveDrive::SwerveDrive() :
-rightFront(rightFrontTopMotor, rightBackBottomMotor, rightFrontEncoder, testPID, false),
-leftFront(leftFrontTopMotor, leftFrontBottomMotor, leftFrontEncoder, testPID, false),
-leftBack(leftBackTopMotor, leftBackBottomMotor, leftBackEncoder, testPID, false),
-rightBack(rightBackTopMotor, rightBackBottomMotor, rightBackEncoder, testPID, false) 
+rightFront(&rightFrontTopMotor, &rightBackBottomMotor, rightFrontEncoder, testPID, false),
+leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, leftFrontEncoder, testPID, false),
+leftBack(&leftBackTopMotor, &leftBackBottomMotor, leftBackEncoder, testPID, false),
+rightBack(&rightBackTopMotor, &rightBackBottomMotor, rightBackEncoder, testPID, false) 
 {
 }
 
@@ -40,7 +51,15 @@ void SwerveDrive::moveTo(double x, double y, double angle, double power)
     double speed4 = sqrt(pow(A, 2) + pow(C, 2));
     double angle4 = atan2(A, C) * 180 / M_PI;
     // speed is in range [0, 1]
-    double max = std::max({speed1, speed2, speed3, speed4});
+    
+    double max = speed1;
+    if (speed2 > max) 
+        max = speed2;
+    if (speed3 > max) 
+        max = speed3;
+    if (speed4 > max) 
+        max = speed4;
+
     if (max > 1)
     {
         speed1 = speed1 / max;

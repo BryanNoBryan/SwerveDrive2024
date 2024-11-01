@@ -1,6 +1,6 @@
 #include "driveControl.h"
 
-void update() {
+void driveControl() {
     bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
     bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 

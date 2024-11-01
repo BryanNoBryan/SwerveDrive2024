@@ -1,11 +1,12 @@
 #include "SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 10
-// max velocity of motors, in RPM ticks
-#define MAX_MOTOR_SPEED_TICKS 300
+#define ANGLE_MARGIN_OF_ERROR 25
+// multipler to input of move_velocity(), must keep input to less than +-200 for green gearbox, will depend on rotation PID
+#define MOVE_VELOCITY_MULTIPLIER 3
 
-SwerveDriveWheel::SwerveDriveWheel(pros::Motor motor1, pros::Motor motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
+
+SwerveDriveWheel::SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
 motor1(motor1),
 motor2(motor2),
 rotateEncoder(rotateEncoder),
@@ -60,8 +61,11 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         speed = 0;
     }
 
-    motor1.move_velocity(((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
-    motor2.move_velocity(((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+    motor1->move_velocity(((-speed * power) + rPower) * MOVE_VELOCITY_MULTIPLIER);
+    motor2->move_velocity(((speed * power) + rPower) * MOVE_VELOCITY_MULTIPLIER);
+
+    pros::lcd::print(6, " motor 1 %f", ((-speed * power) + rPower) * MOVE_VELOCITY_MULTIPLIER); 
+    pros::lcd::print(7, " motor 2 %f", ((speed * power) + rPower) * MOVE_VELOCITY_MULTIPLIER);
 }
 
 // class SwerveDriveWheel

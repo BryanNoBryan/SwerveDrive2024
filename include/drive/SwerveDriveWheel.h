@@ -17,8 +17,8 @@ class SwerveDriveWheel
 public:
     //motor1 is top
     //motor2 is bottom
-    pros::Motor motor1;
-    pros::Motor motor2;
+    pros::Motor* motor1;
+    pros::Motor* motor2;
     //  ASSUMPTIONS:
     //motor encoder is built-in
     //in-built motor PID should be sufficent for differential swerve
@@ -32,7 +32,7 @@ public:
     double current_r;
     double target_r;
 
-    SwerveDriveWheel(pros::Motor motor1, pros::Motor motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder = false);
+    SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder = false);
 
     double getAngle();
     

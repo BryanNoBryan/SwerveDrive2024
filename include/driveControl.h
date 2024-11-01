@@ -7,7 +7,8 @@
 
 #include "macros/liftController.h"
 #include "drive/SwerveDrive.h"
+#include "init/devices.h"
 
-void update();
+void driveControl();
 
 #endif

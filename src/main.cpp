@@ -89,14 +89,5 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-	LiftController::PIDInit();
-	while (true) {
-		LiftController::updatePID();
-		update();
-
-        // delay to save resources
-        pros::delay(2);
-	}
+	driveControl();
 }
