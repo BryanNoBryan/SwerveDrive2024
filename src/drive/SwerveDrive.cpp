@@ -8,14 +8,28 @@
 // radius from center to each wheel
 const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
-lemlib::PID testPID (0.01, 0, 0, 10, false);
+lemlib::PID testPID (1, 0, 0, 10, false);
+
+
+/*
+ LESSON LEARNED:
+    MOTORS MUST BE BY REFERENCE
+
+    NEXT TARGET:
+    ENCODERS OUTPUT A CONSTANT VALUE
+    POTENTIALLY HAVE TO DO ENCODER BY REFERENCE TOO
+    HOWEVER, I DID IT REFERENCE THE SAME WAY AS WITH MOTORS, BUT GIVE DAEMON ERRORS
+    Strangely it compiles fine, therefore it is a runtime error
+
+*/
+
 
 
 SwerveDrive::SwerveDrive() :
-rightFront(rightFrontTopMotor, rightBackBottomMotor, rightFrontEncoder, testPID, false),
-leftFront(leftFrontTopMotor, leftFrontBottomMotor, leftFrontEncoder, testPID, false),
-leftBack(leftBackTopMotor, leftBackBottomMotor, leftBackEncoder, testPID, false),
-rightBack(rightBackTopMotor, rightBackBottomMotor, rightBackEncoder, testPID, false) 
+rightFront(&rightFrontTopMotor, &rightBackBottomMotor, rightFrontEncoder, testPID, false),
+leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, leftFrontEncoder, testPID, false),
+leftBack(&leftBackTopMotor, &leftBackBottomMotor, leftBackEncoder, testPID, false),
+rightBack(&rightBackTopMotor, &rightBackBottomMotor, rightBackEncoder, testPID, false) 
 {
 }
 
@@ -23,10 +37,15 @@ rightBack(rightBackTopMotor, rightBackBottomMotor, rightBackEncoder, testPID, fa
 // +x to the right, +y is downfield, power is scalar multiplier
 void SwerveDrive::moveTo(double x, double y, double angle, double power)
 {
+    pros::lcd::print(3, " x %f", x);
+    pros::lcd::print(4, " y %f", y);
     double A = x - angle * TRACK_LENGTH / 2;
     double B = x + angle * TRACK_LENGTH / 2;
     double C = y - angle * TRACK_WIDTH / 2;
     double D = y + angle * TRACK_WIDTH / 2;
+
+    // pros::lcd::print(6, " A %f", A); 
+    // pros::lcd::print(7, " B %f", B); 
     // wheel 1: top right
     // wheel 2: top left
     // wheel 3: bottom left
@@ -40,7 +59,19 @@ void SwerveDrive::moveTo(double x, double y, double angle, double power)
     double speed4 = sqrt(pow(A, 2) + pow(C, 2));
     double angle4 = atan2(A, C) * 180 / M_PI;
     // speed is in range [0, 1]
-    double max = std::max({speed1, speed2, speed3, speed4});
+    double max = speed1;
+
+    if (speed2 > max) {
+        max = speed2;
+    }
+    if (speed3 > max) {
+        max = speed3;
+    }
+    if (speed4 > max) {
+        max = speed4;
+    }
+
+        // pros::lcd::print(0, " speed1 before %f", speed1); 
     if (max > 1)
     {
         speed1 = speed1 / max;
@@ -49,11 +80,25 @@ void SwerveDrive::moveTo(double x, double y, double angle, double power)
         speed4 = speed4 / max;
     }
 
+        // pros::lcd::print(1, " max %f", max); 
+		pros::lcd::print(2, " speed1 before %f", speed1);
+		
+
     // tell each wheel to do what
     rightFront.move(speed1, angle1, power);
     leftFront.move(speed2, angle2, power);
     leftBack.move(speed3, angle3, power);
     rightBack.move(speed4, angle4, power);
+
+    // pros::lcd::print(6, " rightFront %d", speed1); 
+    // pros::lcd::print(7, " leftFront %d", speed2); 
+    // pros::lcd::print(5, " leftBack %f", speed3); 
+    // pros::lcd::print(9, " rightBack %f", speed4); 
+
+    
+    // pros::lcd::print(5, " angle %f", angle);
+    // pros::lcd::print(5, " angle %f", angle);
+    // pros::lcd::print(5, " angle %f", angle);
 }
 
 void SwerveDrive::reset_position() {

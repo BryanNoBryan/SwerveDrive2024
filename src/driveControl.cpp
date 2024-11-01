@@ -19,11 +19,18 @@ void driveControl()
 		bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
     	bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 
+		// pros::lcd::print(0, " leftx %d", motorSpeedX); 
+		// pros::lcd::print(1, " leftx %d", motorSpeedY);
+		// pros::lcd::print(2, " leftx %d", turnSpeed); 
+
+		
+
 		//swerve drive!!!!
     	driveTrain.moveTo(motorSpeedX, motorSpeedY, turnSpeed, 1);
 
     	if (up) {
     	    driveTrain.reset_position();
+			pros::lcd::print(3, " up"); 
     	}
 
 

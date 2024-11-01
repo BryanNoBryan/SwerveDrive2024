@@ -1,17 +1,17 @@
 #include "SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 10
+#define ANGLE_MARGIN_OF_ERROR 1000
 // max velocity of motors, in RPM ticks
-#define MAX_MOTOR_SPEED_TICKS 300
+#define MAX_MOTOR_SPEED_TICKS 3
 
-SwerveDriveWheel::SwerveDriveWheel(pros::Motor motor1, pros::Motor motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
+SwerveDriveWheel::SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
 motor1(motor1),
 motor2(motor2),
 rotateEncoder(rotateEncoder),
 reverseRotEncoder(reverseRotEncoder),
 PIDr(pid)
-{
+{    
     if (reverseRotEncoder)
     {
         rotateEncoder.reverse();
@@ -34,8 +34,19 @@ void SwerveDriveWheel::zero()
 
 void SwerveDriveWheel::move(double speed, double angle, double power)
 {
+    // leftFrontTopMotor.move(speed);
+    // pros::lcd::print(4, " rightfrontwheel move speed, %f", speed); 
+    // rightFrontTopMotor.move(100);
+    // pros::lcd::print(0, " speed1 after %f", speed); 
+    // motor1->move(speed*127);
+    // motor2->move(100);
+    // pros::lcd::print(6, " motor 1 port %d", motor1->get_port());
+    // pros::lcd::print(7, " motor 1 speed %f", speed);
+
     target_r = angle;
     current_r = getAngle();
+    pros::lcd::print(5, " leftFront angle %f", current_r);
+    pros::lcd::print(0, " is changing %f", speed);
     double oppAngle = angleWrap(current_r + 180); // opp side
 
     double angleFromTarget = angleWrap(target_r - current_r);
@@ -60,8 +71,11 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         speed = 0;
     }
 
-    motor1.move_velocity(((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
-    motor2.move_velocity(((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+    motor1->move_velocity(((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+    motor2->move_velocity(((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+
+    pros::lcd::print(6, " motor 1 %f", ((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS); 
+    pros::lcd::print(7, " motor 2 %f", ((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
 }
 
 // class SwerveDriveWheel

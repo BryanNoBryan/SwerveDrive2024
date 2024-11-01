@@ -10,6 +10,7 @@
 #include "pros/misc.h"
 #include "drive/drivetrain.h"
 #include "drive/SwerveDrive.h"
+#include "init/devices.h"
 
 void driveControl();
 
