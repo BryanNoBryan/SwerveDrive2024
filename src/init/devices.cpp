@@ -47,10 +47,6 @@ pros::MotorGroup rightBackRotate({7, 8}, pros::v5::MotorGears::green, pros::v5::
 pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
 
-//Intake
-pros::Motor intakeMotor(13, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
-
-
 // Sensors
 pros::Rotation rightFrontEncoder(9);
 pros::Rotation leftFrontEncoder(10);

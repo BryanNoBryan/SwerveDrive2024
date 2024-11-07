@@ -10,7 +10,6 @@ const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
 lemlib::PID testPID (1, 0, 0, 10, false);
 
-
 /*
  LESSON LEARNED:
     MOTORS MUST BE BY REFERENCE
@@ -23,7 +22,6 @@ lemlib::PID testPID (1, 0, 0, 10, false);
 
 */
 
-
 SwerveDrive::SwerveDrive() :
     rightFront(&rightFrontTopMotor, &rightBackBottomMotor, &rightFrontEncoder, testPID, false),
     leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, &leftFrontEncoder, testPID, false),
@@ -35,16 +33,11 @@ SwerveDrive::SwerveDrive() :
 // +x to the right, +y is downfield, power is scalar multiplier
 void SwerveDrive::move(double x, double y, double angle, double power)
 {
-    // pros::lcd::print(0, " x %f", x);
-    // pros::lcd::print(1, " y %f", y);
-    // pros::lcd::print(2, " angle %f", angle);
     double A = x - angle * TRACK_LENGTH / 2;
     double B = x + angle * TRACK_LENGTH / 2;
     double C = y - angle * TRACK_WIDTH / 2;
     double D = y + angle * TRACK_WIDTH / 2;
 
-    // pros::lcd::print(6, " A %f", A); 
-    // pros::lcd::print(7, " B %f", B); 
     // wheel 1: top right
     // wheel 2: top left
     // wheel 3: bottom left
@@ -62,7 +55,6 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     double maxVel = 0.7;
     double maxSpeed = max(abs(speed1), max(abs(speed2), max(abs(speed3), abs(speed4))));
 
-    // pros::lcd::print(0, " speed1 before %f", speed1); 
     printf("maxSpeed %f\n", maxSpeed);
 
     if (maxSpeed > maxVel){
@@ -71,9 +63,6 @@ void SwerveDrive::move(double x, double y, double angle, double power)
         speed3 = speed3 * (maxVel/maxSpeed);
         speed4 = speed4 * (maxVel/maxSpeed);
     }
-
-    // pros::lcd::print(1, " max %f", max); 
-    // pros::lcd::print(2, " speed1 before %f", speed1);
 
     printf("speed1 %f\n", speed1*127.0);
     printf("speed2 %f\n", speed2*127.0);
@@ -91,16 +80,6 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     leftFront.move(speed2*75.0, angle2, power);
     leftBack.move(speed3*75.0, angle3, power);
     rightBack.move(speed4*75.0, angle4, power);
-
-    // pros::lcd::print(6, " rightFront %d", speed1); 
-    // pros::lcd::print(7, " leftFront %d", speed2); 
-    // pros::lcd::print(5, " leftBack %f", speed3); 
-    // pros::lcd::print(9, " rightBack %f", speed4); 
-
-    
-    // pros::lcd::print(5, " angle %f", angle);
-    // pros::lcd::print(5, " angle %f", angle);
-    // pros::lcd::print(5, " angle %f", angle);
 }
 
 void SwerveDrive::reset_position() {
@@ -110,61 +89,24 @@ void SwerveDrive::reset_position() {
     rightBack.zero();
 }
 
-// class SwerveDrive
-// {
-// public:
-//     SwerveDriveWheel rightFront;
-//     SwerveDriveWheel leftFront;
-//     SwerveDriveWheel leftBack;
-//     SwerveDriveWheel rightBack;
+// pros::lcd::print(0, " x %f", x);
+// pros::lcd::print(1, " y %f", y);
+// pros::lcd::print(2, " angle %f", angle);
 
-//     SwerveDrive() :
-//     rightFront(rightFrontTopMotor, rightBackBottomMotor, rightFrontEncoder, false, testPID),
-//     leftFront(leftFrontTopMotor, leftFrontBottomMotor, leftFrontEncoder, false, testPID),
-//     leftBack(leftBackTopMotor, leftBackBottomMotor, leftBackEncoder, false, testPID),
-//     rightBack(rightBackTopMotor, rightBackBottomMotor, rightBackEncoder, false, testPID) 
-//     {
+// pros::lcd::print(1, " max %f", max); 
+// pros::lcd::print(2, " speed1 before %f", speed1);
 
-//     }
+// pros::lcd::print(0, " speed1 before %f", speed1); 
 
-//     // anglewrapped [-180, 180], positive is clockwise, zero is straight ahead
-//     // +x to the right, +y is downfield, power is scalar multiplier
-//     void moveTo(double x, double y, double angle, double power)
-//     {
-//         double A = x - angle * TRACK_LENGTH / 2;
-//         double B = x + angle * TRACK_LENGTH / 2;
-//         double C = y - angle * TRACK_LENGTH / 2;
-//         double D = y + angle * TRACK_LENGTH / 2;
+// pros::lcd::print(6, " rightFront %d", speed1); 
+// pros::lcd::print(7, " leftFront %d", speed2); 
+// pros::lcd::print(5, " leftBack %f", speed3); 
+// pros::lcd::print(9, " rightBack %f", speed4); 
 
-//         // wheel 1: top right
-//         // wheel 2: top left
-//         // wheel 3: bottom left
-//         // wheel 4: bottom right
 
-//         double speed1 = sqrt(pow(B, 2) + pow(C, 2));
-//         double angle1 = atan2(B, C) * 180 / M_PI;
-//         double speed2 = sqrt(pow(B, 2) + pow(D, 2));
-//         double angle2 = atan2(B, D) * 180 / M_PI;
-//         double speed3 = sqrt(pow(A, 2) + pow(D, 2));
-//         double angle3 = atan2(A, D) * 180 / M_PI;
-//         double speed4 = sqrt(pow(A, 2) + pow(C, 2));
-//         double angle4 = atan2(A, C) * 180 / M_PI;
+// pros::lcd::print(5, " angle %f", angle);
+// pros::lcd::print(5, " angle %f", angle);
+// pros::lcd::print(5, " angle %f", angle);
 
-//         // speed is in range [0, 1]
-//         double max = std::max({speed1, speed2, speed3, speed4});
-//         if (max > 1)
-//         {
-//             speed1 = speed1 / max;
-//             speed2 = speed2 / max;
-//             speed3 = speed3 / max;
-//             speed4 = speed4 / max;
-//         }
-
-//         double power = 1;
-//         // tell each wheel to do what
-//         rightFront.move(speed1, angle1, power);
-//         leftFront.move(speed2, angle2, power);
-//         leftBack.move(speed3, angle3, power);
-//         rightBack.move(speed4, angle4, power);
-//     }
-// };
+// pros::lcd::print(6, " A %f", A); 
+// pros::lcd::print(7, " B %f", B); 

@@ -36,6 +36,10 @@ double SwerveDriveWheel::calculatePID(double target, double current)
 {
     double error = calcAngleDiff(degreesToRadians(current), degreesToRadians(target));
     error = radiansToDegrees(error); // Convert back to degrees for PID math
+
+    if(error < ANGLE_MARGIN_OF_ERROR) {
+        return 0;
+    }
     
     // Integral term
     integral += error;
@@ -71,21 +75,6 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
     pros::lcd::print(5, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
 
     double rPower = calculatePID(target_r, current_r);
-
-    // if (abs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR){
-    //     rPower = PIDr.update(angleFromTarget);
-    // }else {
-    //     rPower = 0;
-    // }
-
-    // if (abs(oppAngleFromTarget) < ANGLE_MARGIN_OF_ERROR)
-    // {
-    //     speed = -speed;
-    // }
-    // else if (abs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR)
-    // {
-    //     speed = 0;
-    // }
 
     printf("speed %f\n", speed);
     printf("rPower %f\n\n\n", rPower);
