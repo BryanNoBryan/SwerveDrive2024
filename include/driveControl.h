@@ -9,6 +9,7 @@
 #include "lemlib/chassis/chassis.hpp"
 #include "pros/misc.h"
 #include "drive/driveTrain.h"
+#include "macros/intakeController.h"
 
 void driveControl();
 

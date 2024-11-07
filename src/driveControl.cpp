@@ -10,6 +10,8 @@ void driveControl()
 	int motorSpeedX, motorSpeedY, turnSpeed;
 	double currentHeading, neccesaryHeading;
 
+    intakeMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+
 	while (true)
 	{
 		// Gets input from controller joysticks
@@ -25,9 +27,18 @@ void driveControl()
 
 		//turnSpeed = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-
-		
-
+        if (controller.get_digital(DIGITAL_L2))
+        {
+            IntakeController().intakeForward(NULL);
+        }
+        else if (controller.get_digital(DIGITAL_L1))
+        {
+            IntakeController().intakeReverse(NULL);
+        }
+        else
+        {
+            intakeMotor.move(0);
+        }
 
 		pros::delay(10);
 	}
