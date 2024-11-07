@@ -6,14 +6,25 @@
 
 #include "init/devices.h"
 #include "lemlib/api.hpp"
-
 #include "lemlib/pid.hpp"
-
 #include "init/utility.h"
 #include <cmath>
 
-class SwerveDriveWheel
-{
+using namespace std;
+
+class SwerveDriveWheel {
+private:
+    // PID Constants
+    double kP = 1;
+    double kI = 0;
+    double kD = 0;
+    
+    // Error tracking
+    double lastError = 0;
+    double integral = 0;
+    
+    double calculatePID(double target, double current);
+    
 public:
     //motor1 is top
     //motor2 is bottom
@@ -23,7 +34,7 @@ public:
     //motor encoder is built-in
     //in-built motor PID should be sufficent for differential swerve
 
-    pros::Rotation rotateEncoder;
+    pros::Rotation* rotateEncoder;
     //PID for rotation
     lemlib::PID PIDr;
     bool reverseRotEncoder;
@@ -32,7 +43,7 @@ public:
     double current_r;
     double target_r;
 
-    SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder = false);
+    SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation* rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder = false);
 
     double getAngle();
     

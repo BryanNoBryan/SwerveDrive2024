@@ -1,81 +1,103 @@
-#include "SwerveDriveWheel.h"
+#include "drive/SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 1000
+#define ANGLE_MARGIN_OF_ERROR 2
 // max velocity of motors, in RPM ticks
 #define MAX_MOTOR_SPEED_TICKS 3
 
-SwerveDriveWheel::SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
-motor1(motor1),
-motor2(motor2),
-rotateEncoder(rotateEncoder),
-reverseRotEncoder(reverseRotEncoder),
-PIDr(pid)
+SwerveDriveWheel::SwerveDriveWheel(pros::Motor* motor1, pros::Motor* motor2, pros::Rotation* rotateEncoder, lemlib::PID &pid, bool reverseRotEncoder) : 
+    motor1(motor1),
+    motor2(motor2),
+    rotateEncoder(rotateEncoder),
+    reverseRotEncoder(reverseRotEncoder),
+    PIDr(pid)
 {    
     if (reverseRotEncoder)
     {
-        rotateEncoder.reverse();
+        rotateEncoder->reverse();
     }
-    current_r = getAngle(); // adiaewajwiod
+    current_r = getAngle();
 }
 
 double SwerveDriveWheel::getAngle()
 {
     // measured in centidegrees [0, 360]
-    double angle = rotateEncoder.get_angle();
-    return angleWrap(angle / 100.0);
+    return (rotateEncoder->get_angle()/100.0);
 }
 
 /** Zeroes the wheel by updating the offset, and returns the new offset */
 void SwerveDriveWheel::zero()
 {
-    rotateEncoder.reset_position();
+    rotateEncoder->reset_position();
+    rotateEncoder->set_position(0);
+}
+
+double SwerveDriveWheel::calculatePID(double target, double current) 
+{
+    double error = calcAngleDiff(degreesToRadians(current), degreesToRadians(target));
+    error = radiansToDegrees(error); // Convert back to degrees for PID math
+    
+    // Integral term
+    integral += error;
+    
+    // Derivative term
+    double derivative = error - lastError;
+    lastError = error;
+    
+    // Calculate PID output
+    double output_power = (kP * error) + (kI * integral) + (kD * derivative);
+
+    if(output_power > 100) {
+        output_power = 100;
+    }
+
+    if(output_power < 0) {
+        output_power = 0;
+    }
+    
+    // Scale output to reasonable motor power
+    return output_power;
 }
 
 void SwerveDriveWheel::move(double speed, double angle, double power)
 {
-    // leftFrontTopMotor.move(speed);
-    // pros::lcd::print(4, " rightfrontwheel move speed, %f", speed); 
-    // rightFrontTopMotor.move(100);
-    // pros::lcd::print(0, " speed1 after %f", speed); 
-    // motor1->move(speed*127);
-    // motor2->move(100);
-    // pros::lcd::print(6, " motor 1 port %d", motor1->get_port());
-    // pros::lcd::print(7, " motor 1 speed %f", speed);
-
     target_r = angle;
     current_r = getAngle();
-    pros::lcd::print(5, " leftFront angle %f", current_r);
-    pros::lcd::print(0, " is changing %f", speed);
-    double oppAngle = angleWrap(current_r + 180); // opp side
 
-    double angleFromTarget = angleWrap(target_r - current_r);
-    double oppAngleFromTarget = angleWrap(target_r - oppAngle);
+    double angleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(angle));
 
-    double rPower;
-    if (fabs(angleFromTarget) > fabs(oppAngleFromTarget))
-    {
-        rPower = PIDr.update(oppAngleFromTarget);
-    }
-    else
-    {
-        rPower = PIDr.update(angleFromTarget);
-    }
+    pros::lcd::print(3, " target_r %.3f", target_r);
+    pros::lcd::print(4, " current_r %.3f", current_r);
+    pros::lcd::print(5, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
 
-    if (fabs(oppAngleFromTarget) < ANGLE_MARGIN_OF_ERROR)
-    {
-        speed = -speed;
-    }
-    else if (fabs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR)
-    {
-        speed = 0;
-    }
+    double rPower = calculatePID(target_r, current_r);
 
-    motor1->move_velocity(((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
-    motor2->move_velocity(((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+    // if (abs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR){
+    //     rPower = PIDr.update(angleFromTarget);
+    // }else {
+    //     rPower = 0;
+    // }
 
-    pros::lcd::print(6, " motor 1 %f", ((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS); 
-    pros::lcd::print(7, " motor 2 %f", ((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
+    // if (abs(oppAngleFromTarget) < ANGLE_MARGIN_OF_ERROR)
+    // {
+    //     speed = -speed;
+    // }
+    // else if (abs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR)
+    // {
+    //     speed = 0;
+    // }
+
+    printf("speed %f\n", speed);
+    printf("rPower %f\n\n\n", rPower);
+
+    motor1->move(-speed);
+    motor2->move(speed + rPower);
+
+    // motor1->move((-speed * power + rPower));
+    // motor2->move((speed * power + rPower));
+
+    // pros::lcd::print(5, " motor 1 %f", ((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS); 
+    // pros::lcd::print(6, " motor 2 %f", ((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
 }
 
 // class SwerveDriveWheel

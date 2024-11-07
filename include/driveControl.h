@@ -11,6 +11,13 @@
 #include "drive/drivetrain.h"
 #include "drive/SwerveDrive.h"
 #include "init/devices.h"
+#include <cmath>
+#include <algorithm>
+
+using namespace std;
+
+#define TRACK_LENGTH 11.625f
+#define TRACK_WIDTH 11.625f
 
 void driveControl();
 

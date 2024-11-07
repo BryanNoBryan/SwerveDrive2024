@@ -10,6 +10,8 @@
 #include "init/utility.h"
 #include "drive/SwerveDriveWheel.h"
 
+using namespace std;
+
 class SwerveDrive
 {
 public:
@@ -22,7 +24,7 @@ public:
 
     // anglewrapped [-180, 180], positive is clockwise, zero is straight ahead
     // +x to the right, +y is downfield, power is scalar multiplier
-    void moveTo(double x, double y, double angle, double power);
+    void move(double x, double y, double angle, double power);
 
     void reset_position();
 };
