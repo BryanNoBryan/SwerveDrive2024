@@ -15,7 +15,7 @@ using namespace std;
 class SwerveDriveWheel {
 private:
     // PID Constants
-    double kP = 1;
+    double kP = 1.3;
     double kI = 0;
     double kD = 0;
     

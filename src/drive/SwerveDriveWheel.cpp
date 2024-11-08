@@ -37,7 +37,13 @@ double SwerveDriveWheel::calculatePID(double target, double current)
     double error = calcAngleDiff(degreesToRadians(current), degreesToRadians(target));
     error = radiansToDegrees(error); // Convert back to degrees for PID math
 
-    if(error < ANGLE_MARGIN_OF_ERROR) {
+    // if (error > 90) {
+    //     error -= 180;
+    // } else if (error < -90) {
+    //     error += 180;
+    // }
+
+    if(abs(error) < ANGLE_MARGIN_OF_ERROR) {
         return 0;
     }
     
@@ -53,11 +59,13 @@ double SwerveDriveWheel::calculatePID(double target, double current)
 
     if(output_power > 100) {
         output_power = 100;
+    } else if (output_power < -100) {
+        output_power = -100;
     }
 
-    if(output_power < 0) {
-        output_power = 0;
-    }
+    // if(output_power < 0) {
+    //     output_power = 0;
+    // }
     
     // Scale output to reasonable motor power
     return output_power;
@@ -66,21 +74,42 @@ double SwerveDriveWheel::calculatePID(double target, double current)
 void SwerveDriveWheel::move(double speed, double angle, double power)
 {
     target_r = angle;
+    double opp_angle = target_r - 180;
     current_r = getAngle();
+    bool reverse = true;
 
     double angleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(angle));
+    double oppAngleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(opp_angle));
+
+    if (abs(oppAngleFromTarget) < abs(angleFromTarget)) {
+        angleFromTarget = oppAngleFromTarget;
+        target_r = opp_angle;
+        reverse = !reverse;
+    }
 
     pros::lcd::print(3, " target_r %.3f", target_r);
     pros::lcd::print(4, " current_r %.3f", current_r);
     pros::lcd::print(5, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
 
     double rPower = calculatePID(target_r, current_r);
+    
 
     printf("speed %f\n", speed);
     printf("rPower %f\n\n\n", rPower);
 
-    motor1->move(-speed);
-    motor2->move(speed + rPower);
+    if (reverse) {
+        speed *= -1.0;
+    }
+
+    if (abs(speed) > 2) {
+    motor1->move( (-speed + rPower));
+    motor2->move( (speed + rPower));
+        // motor1->move(rPower);
+        // motor2->move(rPower);
+    } else {
+        motor1->move(0);
+        motor2->move(0);    
+    }
 
     // motor1->move((-speed * power + rPower));
     // motor2->move((speed * power + rPower));

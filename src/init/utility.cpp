@@ -5,7 +5,7 @@ Vector2d::Vector2d(double x, double y) : x(x), y(y) {
 }
 
 /**
- * Calculates signed difference between two headings
+ * Calculates signed difference between two headings, in out radians
  */
 double calcAngleDiff(double angle1, double angle2){
 	double diff = angle1 - angle2;

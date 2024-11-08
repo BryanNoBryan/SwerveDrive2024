@@ -43,13 +43,13 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     // wheel 3: bottom left
     // wheel 4: bottom right
     double speed1 = sqrt(pow(B, 2) + pow(C, 2));
-    double angle1 = atan2(B, C) * 180 / M_PI;
+    double angle1 = -atan2(B, C) * 180 / M_PI;
     double speed2 = sqrt(pow(B, 2) + pow(D, 2));
-    double angle2 = atan2(B, D) * 180 / M_PI;
+    double angle2 = -atan2(B, D) * 180 / M_PI;
     double speed3 = sqrt(pow(A, 2) + pow(D, 2));
-    double angle3 = atan2(A, D) * 180 / M_PI;
+    double angle3 = -atan2(A, D) * 180 / M_PI;
     double speed4 = sqrt(pow(A, 2) + pow(C, 2));
-    double angle4 = atan2(A, C) * 180 / M_PI;
+    double angle4 = -atan2(A, C) * 180 / M_PI;
 
     // speed is in range [0, 1]
     double maxVel = 0.7;
