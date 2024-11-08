@@ -10,18 +10,6 @@ const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
 lemlib::PID testPID (1, 0, 0, 10, false);
 
-/*
- LESSON LEARNED:
-    MOTORS MUST BE BY REFERENCE
-
-    NEXT TARGET:
-    ENCODERS OUTPUT A CONSTANT VALUE
-    POTENTIALLY HAVE TO DO ENCODER BY REFERENCE TOO
-    HOWEVER, I DID IT REFERENCE THE SAME WAY AS WITH MOTORS, BUT GIVE DAEMON ERRORS
-    Strangely it compiles fine, therefore it is a runtime error
-
-*/
-
 SwerveDrive::SwerveDrive() :
     rightFront(&rightFrontTopMotor, &rightBackBottomMotor, &rightFrontEncoder, testPID, false),
     leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, &leftFrontEncoder, testPID, false),
