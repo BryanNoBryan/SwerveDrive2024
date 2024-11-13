@@ -156,9 +156,8 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         // pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
         // pros::lcd::print(7, "motor 1: %f, %f", sum2,  delta);
 
-
-    motor1->move( (-speed + rPower));
-    motor2->move( (speed + rPower));
+        motor1->move( (-speed + rPower));
+        motor2->move( (speed + rPower));
         // motor1->move(rPower);
         // motor2->move(rPower);
     } else {
@@ -166,12 +165,6 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         motor1->move(0);
         motor2->move(0);    
     }
-
-
-
-
-
-
 
     // motor1->move((-speed * power + rPower));
     // motor2->move((speed * power + rPower));

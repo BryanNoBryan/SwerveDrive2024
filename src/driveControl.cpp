@@ -39,7 +39,11 @@ void driveControl()
 		pros::lcd::print(2, " Right X %d", rcw); 
 
 		//swerve drive!!!!
-        // SwerveDriveWheel rightBack(&rightBackTopMotor, &rightBackBottomMotor, rightBackEncoder, testPID, false);
+        // SwerveDriveWheel rightFront(&rightFrontTopMotor, &rightBackBottomMotor, &rightFrontEncoder, testPID, true);
+
+        // rightFront.move(100, 0, 1);
+
+
         // rightBack.move(speed4, angle4, 1);
 
     	sdrive.move(fwd/127.0, str/127.0, rcw/127.0, 1);
