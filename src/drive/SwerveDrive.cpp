@@ -11,7 +11,7 @@ const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 lemlib::PID testPID (1, 0, 0, 10, false);
 
 SwerveDrive::SwerveDrive() :
-    rightFront(&rightFrontTopMotor, &rightBackBottomMotor, &rightFrontEncoder, testPID, false),
+    rightFront(&rightFrontTopMotor, &rightBackBottomMotor, &rightFrontEncoder, testPID, true),
     leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, &leftFrontEncoder, testPID, false),
     leftBack(&leftBackTopMotor, &leftBackBottomMotor, &leftBackEncoder, testPID, false),
     rightBack(&rightBackTopMotor, &rightBackBottomMotor, &rightBackEncoder, testPID, false) 
@@ -52,22 +52,26 @@ void SwerveDrive::move(double x, double y, double angle, double power)
         speed4 = speed4 * (maxVel/maxSpeed);
     }
 
-    printf("speed1 %f\n", speed1*127.0);
-    printf("speed2 %f\n", speed2*127.0);
-    printf("speed3 %f\n", speed3*127.0);
-    printf("speed4 %f\n", speed4*127.0);
+    printf("speed1 %f\n", speed1*95.0);
+    printf("speed2 %f\n", speed2*95.0);
+    printf("speed3 %f\n", speed3*95.0);
+    printf("speed4 %f\n", speed4*95.0);
+
+    pros::lcd::print(3, " speed1 %f", speed1*95.0);
+    pros::lcd::print(4, " speed2 %f", speed2*95.0);
+    pros::lcd::print(5, " speed3 %f", speed3*95.0);
+    pros::lcd::print(6, " speed4 %f", speed4*95.0);
 
     printf("angle1 %f\n", angle1);
     printf("angle2 %f\n", angle2);
     printf("angle3 %f\n", angle3);
     printf("angle4 %f\n", angle4);
-		
 
     // tell each wheel to do what
-    rightFront.move(speed1*75.0, angle1, power);
-    leftFront.move(speed2*75.0, angle2, power);
-    leftBack.move(speed3*75.0, angle3, power);
-    rightBack.move(speed4*75.0, angle4, power);
+    rightFront.move(-speed1*95.0, angle1, power);
+    leftFront.move(speed2*95.0, angle2, power);
+    leftBack.move(speed3*95.0, angle3, power);
+    rightBack.move(speed4*95.0, angle4, power);
 }
 
 void SwerveDrive::reset_position() {

@@ -29,12 +29,11 @@ pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::green, pros::v5:
 
 
 // Right Front
-pros::Motor rightFrontTopMotor(5, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor rightFrontBottomMotor(6, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontTopMotor(14, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontBottomMotor(15, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
-pros::MotorGroup rightFrontForward({5, -6}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
-pros::MotorGroup rightFrontRotate({5, 6}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
-
+pros::MotorGroup rightFrontForward({14, -15}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::MotorGroup rightFrontRotate({14, 15}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
 // Right Back
 pros::Motor rightBackTopMotor(7, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);

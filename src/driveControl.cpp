@@ -24,13 +24,13 @@ void driveControl()
 		bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
     	bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
         
-        if(fwd < 10 && fwd > -10) {
+        if(abs(fwd) < 10) {
             fwd = 0;
         }
-        if(str < 10 && str > -10) {
+        if(abs(str) < 10) {
             str = 0;
         }
-        if(rcw < 10 && rcw > -10) {
+        if(abs(rcw) < 10) {
             rcw = 0;
         }
 

@@ -16,8 +16,8 @@
 
 using namespace std;
 
-#define TRACK_LENGTH 11.625f
-#define TRACK_WIDTH 11.625f
+#define TRACK_LENGTH 14.5f
+#define TRACK_WIDTH 14.5f
 
 void driveControl();
 
