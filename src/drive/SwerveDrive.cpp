@@ -73,10 +73,12 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     // printf("angle4 %f\n", angle4);
 
     // tell each wheel to do what
-    rightFront.move(-speed1*85.0, -angle1, power);
-    leftFront.move(-speed2*85.0, -angle2, power);
-    leftBack.move(speed3*85.0, angle3, power);
-    rightBack.move(speed4*85.0, angle4, power);
+    //prev: 85
+
+    rightFront.move(-speed1*127.0, -angle1, power);
+    leftFront.move(-speed2*127.0, -angle2, power);
+    leftBack.move(speed3*127.0, angle3, power);
+    rightBack.move(speed4*127.0, angle4, power);
 }
 
 void SwerveDrive::reset_position() {

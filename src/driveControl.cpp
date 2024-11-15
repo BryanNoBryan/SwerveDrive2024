@@ -23,6 +23,16 @@ void driveControl()
 
 		bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
     	bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+        bool left = controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+        bool right = controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
+
+        //up,down,left,right
+        bool Y =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+        bool A =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        bool X =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_X);
+        bool B =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+        
+        
         
         if(abs(fwd) < 10) {
             fwd = 0;
@@ -48,6 +58,66 @@ void driveControl()
 
     	sdrive.move(fwd/127.0, str/127.0, rcw/127.0, 1);
 
+
+        
+//         if (up) {
+//             intake.move(127);
+//         } else if (down) {
+//             intake.move(-127);
+//         } else {
+//             intake.move(0);
+//         }
+
+        
+
+//         if (right) {
+            
+// leftFrontTopMotor.move(Y ? -127 : 0);
+// leftFrontBottomMotor.move(Y ? 127 : 0);
+
+// // Left Back
+// leftBackTopMotor.move(X ? -127 : 0);
+// leftBackBottomMotor.move(X ? 127 : 0);
+
+// // Right Front
+// rightFrontTopMotor.move(A ? -127 : 0);
+// rightFrontBottomMotor.move(A ? 127: 0);
+
+// // Right Back
+// rightBackTopMotor.move(B ? -127 : 0);
+// rightBackBottomMotor.move(B ? 127 : 0);
+
+// leftFrontTopMotor.move(-127);
+// leftFrontBottomMotor.move(127);
+
+// // Left Back
+// leftBackTopMotor.move(-127);
+// leftBackBottomMotor.move(127);
+
+// // Right Front
+// // rightFrontTopMotor.move(-127);
+// // rightFrontBottomMotor.move(127);
+
+// // Right Back
+// rightBackTopMotor.move(-127);
+// rightBackBottomMotor.move(127);
+
+//         } else {
+// leftFrontTopMotor.move(0);
+// leftFrontBottomMotor.move(0);
+
+// // Left Back
+// leftBackTopMotor.move(0);
+// leftBackBottomMotor.move(0);
+
+// // Right Front
+// rightFrontTopMotor.move(0);
+// rightFrontBottomMotor.move(0);
+
+// // Right Back
+// rightBackTopMotor.move(0);
+// rightBackBottomMotor.move(0);
+//         }
 
     	// if (up) {
     	//     driveTrain.reset_position();
