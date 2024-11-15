@@ -122,42 +122,47 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
     if (abs(speed) > 2) {
 
 
-        // //original output for each motors, will scale them accordingly below
-        // double sum1 = -speed + rPower;
-        // double sum2 = speed + rPower;
+        //original output for each motors, will scale them accordingly below
+        double sum1 = -speed + rPower;
+        double sum2 = speed + rPower;
 
-        // //delta = the overflow of the max mumber above range, which when subtracted
-        // //from either motor power sums, EFFECTIVELY only subtracts from the 
-        // //linear speed, keeping rotational power
-        // double delta = 0.0;
-        // if (abs(sum1) > abs(sum2)) {
-        //     // SUM ONE IS LARGER
-        //     if (sum1 > 127.0)
-        //     {
-        //         delta = sum1 - 127;
-        //     }
-        //     else if (sum1 < -127)
-        //     {
-        //         delta = sum1 + 127;
-        //     }
-        // } else {
-        //     // SUM TWO IS LARGER
-        //     if (sum2 > 127)
-        //     {
-        //         delta = sum2 - 127;
-        //     }
-        //     else if (sum2 < -127)
-        //     {
-        //         delta = sum2 + 127;
-        //     }
-        // }
+        //delta = the overflow of the max mumber above range, which when subtracted
+        //from either motor power sums, EFFECTIVELY only subtracts from the 
+        //linear speed, keeping rotational power
+        double delta = 0.0;
+        if (abs(sum1) > abs(sum2)) {
+            // SUM ONE IS LARGER
+            if (sum1 > 127.0)
+            {
+                delta = sum1 - 127;
+            }
+            else if (sum1 < -127)
+            {
+                delta = sum1 + 127;
+            }
+            motor1->move(sum1 - delta);
+            motor2->move(sum2 + delta);  
+        } else {
+            // SUM TWO IS LARGER
+            if (sum2 > 127)
+            {
+                delta = sum2 - 127;
+            }
+            else if (sum2 < -127)
+            {
+                delta = sum2 + 127;
+            }
+            motor1->move(sum1 + delta);
+            motor2->move(sum2 - delta);
+        }
         // motor1->move(sum1 - delta);
         // motor2->move(sum2 - delta);
-        // pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
-        // pros::lcd::print(7, "motor 1: %f, %f", sum2,  delta);
+        pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
+        pros::lcd::print(7, "motor 2: %f, %f", sum2,  delta);
 
-        motor1->move( (-speed + rPower));
-        motor2->move( (speed + rPower));
+        // motor1->move( (-speed + rPower));
+        // motor2->move( (speed + rPower));
+
         // motor1->move(rPower);
         // motor2->move(rPower);
     } else {
