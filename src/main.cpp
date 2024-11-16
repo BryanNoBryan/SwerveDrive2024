@@ -29,11 +29,11 @@ void initialize() {
 	chassis.calibrate();
     chassis.setPose(0, 0, 0);
 
-    pros::Task arduinoData(serial_read);
 
     //Print to brain's screen
 	pros::Task screenTask([&]() {
         while (true) {
+            pros::Task arduinoData(serial_read);
             // print robot location to the brain screen
             pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
             pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y

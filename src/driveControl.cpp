@@ -1,5 +1,6 @@
 #include "driveControl.h"
 #include "stdio.h"
+#include "serial/serial_comm.h"
 
 /**
  * Takes input from controller joysticks
