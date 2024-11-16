@@ -29,6 +29,8 @@ void initialize() {
 	chassis.calibrate();
     chassis.setPose(0, 0, 0);
 
+    pros::Task arduinoData(serial_read);
+
     //Print to brain's screen
 	pros::Task screenTask([&]() {
         while (true) {
@@ -36,12 +38,14 @@ void initialize() {
             pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
             pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
             pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+            pros::lcd::print(3, "Data From Arduino: %s", max485_data); // message from Arduino
             // log position telemetry
             lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
             // delay to save resources
             pros::delay(50);
         }
     });
+
 }
 
 /**

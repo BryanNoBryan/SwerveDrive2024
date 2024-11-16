@@ -3,9 +3,14 @@
 
 #define PROS_USE_SIMPLE_NAMES
 #define PROS_USE_LITERALS
+
+// Port to use for serial data
+#define SERIALPORT 1
+
 #include "api.h"
 #include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
+#include <sstream>
 
 // Controllers
 extern pros::Controller controller;
@@ -48,6 +53,11 @@ extern pros::MotorGroup rightBackRotate;
 
 // Temporary
 extern pros::MotorGroup driveRight;
+
+// Prototypes for hidden vex functions to bypass PROS bug
+extern "C" int32_t vexGenericSerialReceive(uint32_t index, uint8_t *buffer, int32_t length);
+extern "C" void vexGenericSerialEnable(uint32_t index, uint32_t nu);
+extern "C" void vexGenericSerialBaudrate(uint32_t index, uint32_t rate);
 
 // Sensors
 extern pros::Imu imu;

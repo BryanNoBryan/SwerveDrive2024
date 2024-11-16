@@ -47,8 +47,5 @@ pros::MotorGroup rightBackRotate({7, 8}, pros::v5::MotorGears::green, pros::v5::
 // Temporary
 pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
-
-
-
 // Sensors
 pros::Imu imu(9);
