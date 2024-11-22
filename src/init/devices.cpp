@@ -49,7 +49,14 @@ pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5
 
 
 //Intake
-pros::Motor intakeMotor(13, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+// pros::Motor intakeMotor(13, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+//Lift
+pros::Motor liftLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Sensors
 pros::Imu imu(9);

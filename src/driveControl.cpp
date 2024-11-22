@@ -10,7 +10,10 @@ void driveControl()
 	int motorSpeedX, motorSpeedY, turnSpeed;
 	double currentHeading, neccesaryHeading;
 
-    intakeMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    intakeLeft.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    intakeRight.set_brake_mode(MOTOR_BRAKE_BRAKE);
+
+    LiftController liftController;
 
 	while (true)
 	{
@@ -18,6 +21,28 @@ void driveControl()
         motorSpeedX = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         motorSpeedY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 
+        bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+    	bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+        bool left = controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+        bool right = controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
+
+        //up,down,left,right
+        bool Y =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
+        bool A =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        bool X =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_X);
+        bool B =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+
+        //trigger the PID of the liftController to maintain height
+        liftController.update();
+        if (up) {
+            liftController.ascend(NULL);
+        } 
+        if (down) {
+            liftController.descend(NULL);
+        }
+        if (right) {
+            liftController.zeroEncoder();
+        }
 
         // Strafing with automatic turn
 
@@ -37,7 +62,7 @@ void driveControl()
         }
         else
         {
-            intakeMotor.move(0);
+            IntakeController().stop(NULL);
         }
 
 		pros::delay(10);

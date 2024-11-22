@@ -20,6 +20,10 @@ public:
      * @brief Spin intake backwards at full speed
      */
 	void intakeReverse(void* ignore);
+     /**
+     * @brief stop intake
+     */
+	void stop(void* ignore);
 };
 
 #endif

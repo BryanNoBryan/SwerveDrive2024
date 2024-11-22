@@ -10,6 +10,7 @@
 #include "pros/misc.h"
 #include "drive/driveTrain.h"
 #include "macros/intakeController.h"
+#include "macros/liftController.h"
 
 void driveControl();
 

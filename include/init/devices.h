@@ -49,10 +49,15 @@ extern pros::MotorGroup rightBackRotate;
 // Temporary
 extern pros::MotorGroup driveRight;
 
-// Intake
-extern pros::Motor intakeMotor;
-
 // Sensors
 extern pros::Imu imu;
+
+// Intake
+extern pros::Motor intakeLeft;
+extern pros::Motor intakeRight;
+
+//Lift
+extern pros::Motor liftLeft;
+extern pros::Motor liftRight;
 
 #endif
