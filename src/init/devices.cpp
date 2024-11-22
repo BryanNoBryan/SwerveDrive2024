@@ -55,8 +55,8 @@ pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUni
 pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 //Lift
-pros::Motor liftLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftLeft(16, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(17, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Sensors
 pros::Imu imu(9);
