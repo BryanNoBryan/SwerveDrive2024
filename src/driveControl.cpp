@@ -119,10 +119,10 @@ void driveControl()
 // rightBackBottomMotor.move(0);
 //         }
 
-    	// if (up) {
-    	//     driveTrain.reset_position();
-		// 	pros::lcd::print(3, " up"); 
-    	// }
+    	if (up) {
+    	    sdrive.reset_position();
+			pros::lcd::print(3, " up"); 
+    	}
 
 		pros::delay(10);
 	}
