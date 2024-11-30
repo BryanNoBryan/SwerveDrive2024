@@ -35,8 +35,9 @@ pros::Motor leftBackBottomMotor(11, pros::v5::MotorGears::green, pros::v5::Motor
 // pros::MotorGroup leftBackForward({3, -4}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 // pros::MotorGroup leftBackRotate({3, 4}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
+
 // Temporary
-pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 
 // Right Front
@@ -54,7 +55,7 @@ pros::Motor rightBackBottomMotor(20, pros::v5::MotorGears::green, pros::v5::Moto
 // pros::MotorGroup rightBackRotate({7, 8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
 // Temporary
-pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 
 // Sensors
@@ -63,6 +64,14 @@ pros::Rotation leftBackEncoder(13);
 pros::Rotation rightFrontEncoder(-8);
 pros::Rotation rightBackEncoder(18);
 
-pros::Motor intake(13, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+//Intake
+pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+pros::MotorGroup intake({14, -15}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+//Lift
+pros::Motor liftLeft(16, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(17, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 pros::Imu imu(20);

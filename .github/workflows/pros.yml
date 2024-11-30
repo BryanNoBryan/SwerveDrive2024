@@ -22,4 +22,6 @@ jobs:
     - name: Clean and compile PROS project
       run: |
         export PATH=/home/runner/.local/bin:$PATH
+        pros c add-depot LemLib https://raw.githubusercontent.com/LemLib/LemLib/depot/stable.json
+        pros c apply LemLib
         pros make all

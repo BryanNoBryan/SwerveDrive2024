@@ -60,4 +60,13 @@ extern pros::Motor intake;
 // Sensors
 extern pros::Imu imu;
 
+// Intake
+extern pros::Motor intakeLeft;
+extern pros::Motor intakeRight;
+extern pros::MotorGroup intake;
+
+//Lift
+extern pros::Motor liftLeft;
+extern pros::Motor liftRight;
+
 #endif
