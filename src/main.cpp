@@ -25,6 +25,7 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 
+    controller.rumble(".");
     //Initialize chassis
 	chassis.calibrate();
     chassis.setPose(0, 0, 0);

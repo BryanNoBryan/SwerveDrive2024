@@ -73,5 +73,25 @@ lemlib::ControllerSettings angularController{
 //     return normalizedOutput * 127;
 // }
 
+// Refer to this drive curve I found: https://www.desmos.com/calculator/9loqd3rbsb
+//  float customDriveCurve(float input, float scale) {
+//      float normalizedInput = input / 127;
+//      float normalizedOutput = 0;
+
+//     if (scale == 0) {
+//         normalizedOutput = normalizedInput;
+//     }
+//     else {
+//         if (input >= 0) {
+//             normalizedOutput = (1 - pow(M_E, scale * normalizedInput)) / (1 - pow(M_E, scale));
+//         }
+//         else {
+//             normalizedOutput = (pow(M_E, scale * -normalizedInput) - 1) / (1 - pow(M_E, scale));
+//         }
+//     }
+
+//     return normalizedOutput * 127;
+// }
+
 // Putting it all together
 lemlib::Chassis chassis(drivetrain, lateralController, angularController, sensors);
