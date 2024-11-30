@@ -52,29 +52,6 @@ void SwerveDrive::move(double x, double y, double angle, double power)
         speed4 = speed4 * (maxVel/maxSpeed);
     }
 
-    // printf("speed1 %f\n", speed1*95.0);
-    // printf("speed2 %f\n", speed2*95.0);
-    // printf("speed3 %f\n", speed3*95.0);
-    // printf("speed4 %f\n", speed4*95.0);
-
-    // pros::lcd::print(3, " speed1 %f", speed1*95.0);
-    // pros::lcd::print(4, " speed2 %f", speed2*95.0);
-    // pros::lcd::print(5, " speed3 %f", speed3*95.0);
-    // pros::lcd::print(6, " speed4 %f", speed4*95.0);
-
-    // pros::lcd::print(4, " current_r %.3f", rightFrontEncoder.get_angle()/100.0, rightBackEncoder.get_angle()/100.0);
-    // pros::lcd::print(5, " target_r %.3f", angle1, angle4);
-    // pros::lcd::print(6, " angleFromTarget %.3f", radiansToDegrees(calcAngleDiff(degreesToRadians(rightFrontEncoder.get_angle()/100.0), degreesToRadians(angle))));
-    // pros::lcd::print(7, " angleFromTarget %.3f", radiansToDegrees(calcAngleDiff(degreesToRadians(rightFrontEncoder.get_angle()/100.0), degreesToRadians(angle-180))));
-
-    // printf("angle1 %f\n", angle1);
-    // printf("angle2 %f\n", angle2);
-    // printf("angle3 %f\n", angle3);
-    // printf("angle4 %f\n", angle4);
-
-    // tell each wheel to do what
-    //prev: 85
-
     rightFront.move(-speed1*127.0, -angle1, power);
     leftFront.move(-speed2*127.0, -angle2, power);
     leftBack.move(speed3*127.0, angle3, power);

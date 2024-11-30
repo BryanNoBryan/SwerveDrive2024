@@ -121,7 +121,6 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
 
     if (abs(speed) > 2) {
 
-
         //original output for each motors, will scale them accordingly below
         double sum1 = -speed + rPower;
         double sum2 = speed + rPower;
@@ -155,147 +154,13 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
             motor1->move(sum1 + delta);
             motor2->move(sum2 - delta);
         }
-        // motor1->move(sum1 - delta);
-        // motor2->move(sum2 - delta);
+        
         pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
         pros::lcd::print(7, "motor 2: %f, %f", sum2,  delta);
 
-        // motor1->move( (-speed + rPower));
-        // motor2->move( (speed + rPower));
-
-        // motor1->move(rPower);
-        // motor2->move(rPower);
     } else {
         //when input power is 0, to eliminate rapid angle changes
         motor1->move(0);
         motor2->move(0);    
     }
-
-    // motor1->move((-speed * power + rPower));
-    // motor2->move((speed * power + rPower));
-
-    // pros::lcd::print(5, " motor 1 %f", ((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS); 
-    // pros::lcd::print(6, " motor 2 %f", ((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
 }
-
-
-// pros::lcd::print(6, "break1");
-        // double sum1 = -speed + rPower;
-        // double sum2 = speed + rPower;
-
-        // double delta = 0;
-        // if (abs(sum1) > abs(sum2)) {
-        //     // SUM ONE IS LARGER
-        //     if (sum1 > 127)
-        //     {
-        //         delta = sum1 - 127;
-        //     }
-        //     else if (sum1 < -127)
-        //     {
-        //         delta = sum1 + 127;
-        //     }
-        //     pros::lcd::print(6, "break1");
-        // } else {
-        //     if (sum2 > 127)
-        //     {
-        //         delta = sum2 - 127;
-        //     }
-        //     else if (sum2 < -127)
-        //     {
-        //         delta = sum2 + 127;
-        //     }
-        //     pros::lcd::print(7,"break2");
-        // }
-        
-
-        // motor1->move(sum1 - delta);
-        // motor2->move(sum2- delta);
-        // pros::lcd::print(6, "motor 1: %d, %d", sum1, delta);
-        // pros::lcd::print(7, "motor 1: %d, %d", sum2,  delta);
-
-
-// class SwerveDriveWheel
-// {
-// public:
-//     //motor1 is top
-//     //motor2 is bottom
-//     pros::Motor motor1;
-//     pros::Motor motor2;
-//     //  ASSUMPTIONS:
-//     //motor encoder is built-in
-//     //in-built motor PID should be sufficent for differential swerve
-
-//     pros::Rotation rotateEncoder;
-//     //PID for rotation
-//     lemlib::PID PIDr;
-//     bool reverseRotEncoder;
-
-//     //rotation angle in deg, for PID
-//     double current_r;
-//     double target_r;
-
-//     SwerveDriveWheel(pros::Motor motor1, pros::Motor motor2, int rotationPort, bool reverseRotEncoder = false, lemlib::PID &pid) :
-//     motor1(motor1),
-//     motor2(motor2),
-//     rotateEncoder(rotationPort),
-//     reverseRotEncoder(reverseRotEncoder),
-//     PIDr(pid)
-//     {
-//         if (reverseRotEncoder) {
-//             rotateEncoder.reverse();
-//         }
-//         current_r = getAngle(); //adiaewajwiod
-//     }
-
-//     double getAngle() {
-//         //measured in centidegrees [0, 360]
-//         double angle = rotateEncoder.get_angle();
-//         return angleWrap(angle / 100.0);
-//     }
-
-//     /** Zeroes the wheel by updating the offset, and returns the new offset */
-//     void zero()
-//     {
-//         rotateEncoder.reset_position();
-//     }
-
-//     void move(double speed, double angle, double power) {
-//         target_r = angle;
-//         current_r = getAngle();
-//         double oppAngle = angleWrap(current_r + 180); //opp side
-
-//         double angleFromTarget = angleWrap(target_r - current_r);
-//         double oppAngleFromTarget = angleWrap(target_r - oppAngle);
-
-//         double rPower;
-//         if (fabs(angleFromTarget) > fabs(oppAngleFromTarget)) {
-//             rPower = PIDr.update(oppAngleFromTarget);
-//         } else {
-//             rPower = PIDr.update(angleFromTarget);
-//         }
-
-//         if (fabs(oppAngleFromTarget) < ANGLE_MARGIN_OF_ERROR) {
-//             speed = -speed;
-//         }
-//         else if (fabs(angleFromTarget) > ANGLE_MARGIN_OF_ERROR) {
-//             speed = 0;
-//         }
-
-//         motor1.move_velocity(((-speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
-//         motor2.move_velocity(((speed * power) + rPower) * MAX_MOTOR_SPEED_TICKS);
-//     }
-
-//     //BELOW IS FUTURE IMPLEMENTATION, running in separate thread allows for faster PID
-
-//     // void runAnglePID()
-//     // {
-//     //     pros::Task screen_task([&]() {
-//     //         while (true)
-//     //             {
-//     //                 doPIDCalc();
-//     //                 pros::delay(50);
-//     //             }
-//     //     });
-//     // }
-
-// };
