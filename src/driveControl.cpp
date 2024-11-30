@@ -6,7 +6,7 @@
  */
 void driveControl()
 {
-	  int fwd, str, rcw;
+    int fwd, str, rcw;
 
     const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
     lemlib::PID testPID (1, 0, 0, 10, false);
@@ -38,7 +38,6 @@ void driveControl()
         bool B =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
         
         
-        
         if(abs(fwd) < 10) {
             fwd = 0;
         }
@@ -55,17 +54,6 @@ void driveControl()
 
 		//swerve drive!!!!
     	sdrive.move(fwd/127.0, str/127.0, rcw/127.0, 1);
-
-        bool up = controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-    	bool down = controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
-        bool left = controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
-        bool right = controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT);
-
-        //up,down,left,right
-        bool Y =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
-        bool A =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-        bool X =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_X);
-        bool B =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 
         //trigger the PID of the liftController to maintain height
         liftController.update();
@@ -85,16 +73,11 @@ void driveControl()
 			pros::lcd::print(3, " up"); 
     	}
     
-        if (controller.get_digital(DIGITAL_L2))
-        {
+        if (controller.get_digital(DIGITAL_L2)){
             IntakeController().intakeForward(NULL);
-        }
-        else if (controller.get_digital(DIGITAL_L1))
-        {
+        }else if (controller.get_digital(DIGITAL_L1)){
             IntakeController().intakeReverse(NULL);
-        }
-        else
-        {
+        }else {
             IntakeController().stop(NULL);
         }
 

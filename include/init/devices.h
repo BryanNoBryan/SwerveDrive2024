@@ -55,8 +55,6 @@ extern pros::MotorGroup rightBackRotate;
 // Temporary
 extern pros::MotorGroup driveRight;
 
-extern pros::Motor intake;
-
 // Sensors
 extern pros::Imu imu;
 
