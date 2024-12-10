@@ -8,18 +8,6 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // So leftFrontTopMotor would refer to the motor that is in the left and front of the robot and the motor who's gear is on top
 // This logic extends to the other motors
 
-//PORTS
-/*
-Bottom Motor, Top Motor, Encoder
-
-Top Left: 1 2 3
-Bottom left: 11 12 13
-
-Top Right: 10 9 8
-Bottom Right: 20 19 18
-*/
-
-
 // Left Front
 pros::Motor leftFrontTopMotor(-4, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 pros::Motor leftFrontBottomMotor(-5, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
@@ -59,9 +47,9 @@ pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5
 
 
 // Sensors
-pros::Rotation leftFrontEncoder(-3);
+pros::Rotation leftFrontEncoder(-8);
 pros::Rotation leftBackEncoder(13);
-pros::Rotation rightFrontEncoder(-8);
+pros::Rotation rightFrontEncoder(-3);
 pros::Rotation rightBackEncoder(18);
 
 //Intake
