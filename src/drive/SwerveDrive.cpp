@@ -52,8 +52,8 @@ void SwerveDrive::move(double x, double y, double angle, double power)
         speed4 = speed4 * (maxVel/maxSpeed);
     }
 
-    rightFront.move(-speed1*127.0, -angle1, power);
-    leftFront.move(-speed2*127.0, -angle2, power);
+    rightFront.move(speed1*127.0, angle1, power);
+    leftFront.move(speed2*127.0, angle2, power);
     leftBack.move(speed3*127.0, angle3, power);
     rightBack.move(speed4*127.0, angle4, power);
 }

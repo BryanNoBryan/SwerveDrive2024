@@ -13,11 +13,11 @@ LiftController::LiftController() {
 }
 
 double LiftController::getHeight() {
-    return intakeLeft.get_position();
+    return liftLeftTop.get_position();
 }
 
 void LiftController::zeroEncoder() {
-    intakeLeft.set_zero_position(intakeLeft.get_position());
+    liftLeftTop.set_zero_position(liftLeftTop.get_position());
 }
 
 /**
@@ -31,14 +31,14 @@ void LiftController::goToHeight(double height) {
  * Ascend up at a set speed
  */
 void LiftController::ascend(void* ignore) {
-    targetHeight += 1;
+    targetHeight += 10;
 }
 
 /**
  * Descend down at a set speed
  */
 void LiftController::descend(void* ignore) {
-    targetHeight -= 1;
+    targetHeight -= 10;
 }
 
 /**
@@ -88,6 +88,8 @@ double LiftController::calculatePIDF(double target, double current)
 void LiftController::update() {
     double power = calculatePIDF(targetHeight, currentHeight);
 
-    intakeLeft.move(power);
-    intakeRight.move(-power);
+    liftLeftTop.move(power);
+    liftLeftBottom.move(power);
+    liftRightTop.move(-power);
+    liftRightBottom.move(-power);
 } 

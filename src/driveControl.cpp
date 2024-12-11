@@ -53,7 +53,7 @@ void driveControl()
 		pros::lcd::print(2, " Right X %d", rcw); 
 
 		//swerve drive!!!!
-    	sdrive.move(fwd/127.0, str/127.0, rcw/127.0, 1);
+    	sdrive.move(fwd/127.0, str/127.0, rcw/254.0, 1);
 
         //trigger the PID of the liftController to maintain height
         liftController.update();
