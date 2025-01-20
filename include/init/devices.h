@@ -5,7 +5,7 @@
 #define PROS_USE_LITERALS
 
 // Port to use for serial data
-#define SERIALPORT 1
+#define SERIALPORT 7
 
 #include "api.h"
 #include "pros/motor_group.hpp"
@@ -58,6 +58,8 @@ extern pros::MotorGroup driveRight;
 extern "C" int32_t vexGenericSerialReceive(uint32_t index, uint8_t *buffer, int32_t length);
 extern "C" void vexGenericSerialEnable(uint32_t index, uint32_t nu);
 extern "C" void vexGenericSerialBaudrate(uint32_t index, uint32_t rate);
+
+extern pros::adi::DigitalOut rxtx_enable;
 
 // Sensors
 extern pros::Imu imu;
