@@ -55,5 +55,3 @@ pros::Motor liftLeftBottom(20, pros::v5::MotorGears::blue, pros::v5::MotorEncode
 
 pros::Motor liftRightTop(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 pros::Motor liftRightBottom(12, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-pros::Imu imu(20);
