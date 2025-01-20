@@ -10,6 +10,8 @@ void driveControl()
 {
     int fwd, str, rcw;
     bool idle = false;
+    bool clampToggle = false;
+    
 
     const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
     lemlib::PID testPID (1, 0, 0, 10, false);
@@ -120,5 +122,20 @@ void driveControl()
         }
 
 		pros::delay(10);
-	}
+
+        //Toggle Mogo Clamp
+
+        if(L1) {
+            //closes clamp if currently toggled
+            if (clampToggle) {
+                MogoClamp().closeClamp(NULL);
+                clampToggle = false;
+            }
+            //opens clamp otherwise
+            else {
+                MogoClamp().openClamp(NULL);
+                clampToggle = true;
+            }
+	    }
+    }
 }

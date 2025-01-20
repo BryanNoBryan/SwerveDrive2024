@@ -69,4 +69,8 @@ extern pros::adi::Potentiometer rightPot;
 
 extern pros::Optical mogoOptical;
 
+//MogoClamp
+extern pros::adi::Pneumatics clampLeft;
+extern pros::adi::Pneumatics clampRight;
+
 #endif
