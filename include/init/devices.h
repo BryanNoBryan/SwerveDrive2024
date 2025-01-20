@@ -56,9 +56,7 @@ extern pros::adi::DigitalOut rxtx_enable;
 extern pros::Imu imu;
 
 // Intake
-extern pros::Motor intakeLeft;
-extern pros::Motor intakeRight;
-extern pros::MotorGroup intake;
+extern pros::Motor intake;
 
 //Lift
 extern pros::Motor liftLeftTop;

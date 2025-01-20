@@ -16,8 +16,7 @@ void driveControl()
     SwerveDrive sdrive;
     // sdrive.reset_position();
 
-    intakeLeft.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    intakeRight.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    intake.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
     LiftController liftController;
 
@@ -41,6 +40,14 @@ void driveControl()
         bool A =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
         bool X =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_X);
         bool B =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+
+        //left bumper, right bumper
+        bool L1 = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+        bool R1 = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+
+        //left trigger, right trigger
+        bool L2 = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+        bool R2 = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
         
         
         if(abs(fwd) < 10) {
@@ -58,7 +65,7 @@ void driveControl()
 		pros::lcd::print(2, " Right X %d", rcw); 
 
 		//swerve drive!!!!
-    	sdrive.move(fwd/127.0, str/127.0, rcw/254.0, 1);
+    	// sdrive.move(fwd/127.0, str/127.0, rcw/254.0, 1);
 
         //trigger the PID of the liftController to maintain height
         liftController.update();
@@ -75,12 +82,12 @@ void driveControl()
 
     	if (up) {
     	    sdrive.reset_position();
-			pros::lcd::print(3, " up"); 
+			// pros::lcd::print(3, " up"); 
     	}
     
-        if (controller.get_digital(DIGITAL_L2)){
+        if (R2){
             IntakeController().intakeForward(NULL);
-        }else if (controller.get_digital(DIGITAL_L1)){
+        }else if (R1){
             IntakeController().intakeReverse(NULL);
         }else {
             IntakeController().stop(NULL);

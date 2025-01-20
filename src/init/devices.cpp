@@ -38,10 +38,7 @@ pros::Rotation rightBackEncoder(18);
 
 
 //Intake
-pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-pros::MotorGroup intake({14, -15}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor intake(-3, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Enables serial communication between the vex brain and arduino by sending a 5V DC signal
 pros::adi::DigitalOut rxtx_enable('A');
