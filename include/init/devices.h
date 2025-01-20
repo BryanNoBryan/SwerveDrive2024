@@ -52,16 +52,21 @@ extern "C" void vexGenericSerialBaudrate(uint32_t index, uint32_t rate);
 
 extern pros::adi::DigitalOut rxtx_enable;
 
-// Sensors
-extern pros::Imu imu;
-
 // Intake
 extern pros::Motor intake;
 
 //Lift
-extern pros::Motor liftLeftTop;
-extern pros::Motor liftLeftBottom;
-extern pros::Motor liftRightTop;
-extern pros::Motor liftRightBottom;
+extern pros::Motor liftLeft;
+extern pros::Motor liftRight;
+
+extern pros::MotorGroup lift;
+
+// Sensors
+extern pros::Imu imu;
+
+extern pros::adi::Potentiometer leftPot;
+extern pros::adi::Potentiometer rightPot;
+
+extern pros::Optical mogoOptical;
 
 #endif

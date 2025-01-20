@@ -1,44 +1,41 @@
 #include "macros/liftController.h"
 
-// margin of error of height, units: ticks
-#define MARGIN_OF_ERROR 20
-// height where all the elastic bands are extended into a neutral state, units: ticks
-#define HEIGHT_WHEN_ELASTIC_BANDS_SLACK 600
-#define GRAVITY_MULTIPLER 1
-#define ELASTIC_BAND_MULTIPLER 1
+double LiftController::currentHeight = 0;
+double* LiftController::targetHeight = nullptr;
+double LiftController::lastError = 0;
+double LiftController::integral = 0;
 
 LiftController::LiftController() {
-    currentHeight = LiftController::getHeight();
-    targetHeight = 0;
+    currentHeight = getHeight();
+    targetHeight = idleHeight;
+    lastError = 0;
+    integral = 0;
 }
 
 double LiftController::getHeight() {
-    return liftLeftTop.get_position();
+    return leftPot.get_angle();
 }
 
 void LiftController::zeroEncoder() {
-    liftLeftTop.set_zero_position(liftLeftTop.get_position());
+    // liftLeftTop.set_zero_position(0);
+    // liftLeftBottom.set_zero_position(0);
+    // liftRightTop.set_zero_position(0);
+    // liftRightBottom.set_zero_position(0);
 }
 
 /**
  * Go to a set height, 0 is lowest, + is up
  */
-void LiftController::goToHeight(double height) {
-    targetHeight = height;
-}
+void LiftController::goToHeight(void* height) {
+    targetHeight = (double*) height;
 
-/**
- * Ascend up at a set speed
- */
-void LiftController::ascend(void* ignore) {
-    targetHeight += 10;
-}
+    pros::lcd::print(3, "Going to height: %f", *targetHeight);
 
-/**
- * Descend down at a set speed
- */
-void LiftController::descend(void* ignore) {
-    targetHeight -= 10;
+    while(abs(*targetHeight - currentHeight) > LIFT_MARGIN_OF_ERROR){
+        update();
+
+        pros::delay(10);
+    }
 }
 
 /**
@@ -46,20 +43,21 @@ void LiftController::descend(void* ignore) {
  */
 double LiftController::calculatePIDF(double target, double current) 
 {
-    currentHeight = LiftController::getHeight();
+    currentHeight = getHeight();
 
-    double error = target - current;
+    double error = (target - current)/2;
+    pros::lcd::print(1, "Error: %f", error);
 
-    // downwards force of gravity
-    double gravity_feedforward = 9.81 * GRAVITY_MULTIPLER;
+    // // downwards force of gravity
+    // double gravity_feedforward = 9.81 * GRAVITY_MULTIPLER;
 
-    // upwards force of elastic band, assuming height never surpasses slack height
-    double elastic_band_feedforward = (HEIGHT_WHEN_ELASTIC_BANDS_SLACK - currentHeight) * ELASTIC_BAND_MULTIPLER;
+    // // upwards force of elastic band, assuming height never surpasses slack height
+    // double elastic_band_feedforward = (HEIGHT_WHEN_ELASTIC_BANDS_SLACK - currentHeight) * ELASTIC_BAND_MULTIPLER;
 
-    // prove the force necessary to hover, velocity 0
-    if(abs(error) < MARGIN_OF_ERROR) {
-        return gravity_feedforward - elastic_band_feedforward;
-    }
+    // // prove the force necessary to hover, velocity 0
+    // if(abs(error) < MARGIN_OF_ERROR) {
+    //     return gravity_feedforward - elastic_band_feedforward;
+    // }
     
     // Integral term
     integral += error;
@@ -72,12 +70,12 @@ double LiftController::calculatePIDF(double target, double current)
     double output_power = (kP * error) + (kI * integral) + (kD * derivative);
 
     //feedforward: account for gravity and elastic band forces
-    output_power = output_power + gravity_feedforward - elastic_band_feedforward;
+    // output_power = output_power + gravity_feedforward - elastic_band_feedforward;
 
-    if(output_power > 127) {
-        output_power = 127;
-    } else if (output_power < -127) {
-        output_power = -127;
+    if(output_power > 100) {
+        output_power = 100;
+    } else if (output_power < -100) {
+        output_power = -100;
     }
     
     // Scale output to reasonable motor power
@@ -86,10 +84,9 @@ double LiftController::calculatePIDF(double target, double current)
 
 // updates PID and power of each motor, call it in driveControl
 void LiftController::update() {
-    double power = calculatePIDF(targetHeight, currentHeight);
+    double power = calculatePIDF(*targetHeight, currentHeight);
 
-    liftLeftTop.move(power);
-    liftLeftBottom.move(power);
-    liftRightTop.move(-power);
-    liftRightBottom.move(-power);
+    pros::lcd::print(4, "Power: %f", power);
+
+    lift.move(power);
 } 

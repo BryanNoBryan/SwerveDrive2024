@@ -10,20 +10,20 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // This logic extends to the other motors
 
 // Left Front
-pros::Motor leftFrontTopMotor(9, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor leftFrontBottomMotor(10, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftFrontTopMotor(1, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftFrontBottomMotor(2, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Left Back
-pros::Motor leftBackTopMotor(1, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor leftBackBottomMotor(2, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftBackTopMotor(7, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftBackBottomMotor(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Right Front
-pros::Motor rightFrontTopMotor(4, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor rightFrontBottomMotor(5, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontTopMotor(9, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontBottomMotor(10, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Right Back
-pros::Motor rightBackTopMotor(6, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor rightBackBottomMotor(7, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightBackTopMotor(4, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightBackBottomMotor(5, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Temporary
 pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
@@ -38,18 +38,22 @@ pros::Motor intake(-3, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::
 pros::adi::DigitalOut rxtx_enable('A');
 
 //Lift
-pros::Motor liftLeft(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftRight(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftLeft(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(20, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+pros::MotorGroup lift({11, 20}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+pros::Motor bucket(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Sensors
-pros::Rotation leftFrontEncoder(-19);
-pros::Rotation leftBackEncoder(13);
-pros::Rotation rightFrontEncoder(-3);
-pros::Rotation rightBackEncoder(18);
+pros::Rotation leftFrontEncoder(12);
+pros::Rotation leftBackEncoder(-13);
+pros::Rotation rightFrontEncoder(19);
+pros::Rotation rightBackEncoder(-18);
 
 pros::Imu imu(9);
 
 pros::adi::Potentiometer leftPot('A', pros::E_ADI_POT_EDR);
 pros::adi::Potentiometer rightPot('B', pros::E_ADI_POT_EDR);
 
-pros::Optical mogoOptical(1);
+pros::Optical mogoOptical(16);

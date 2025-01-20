@@ -9,6 +9,7 @@
 void driveControl()
 {
     int fwd, str, rcw;
+    bool idle = false;
 
     const double RADIUS = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
     lemlib::PID testPID (1, 0, 0, 10, false);
@@ -17,6 +18,8 @@ void driveControl()
     // sdrive.reset_position();
 
     intake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    liftLeft.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    liftRight.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
     LiftController liftController;
 
@@ -60,30 +63,53 @@ void driveControl()
             rcw = 0;
         }
 
-		pros::lcd::print(0, " Left X %d", fwd); 
-		pros::lcd::print(1, " Left Y %d", str);
-		pros::lcd::print(2, " Right X %d", rcw); 
+		// pros::lcd::print(0, " Left X %d", fwd); 
+		// pros::lcd::print(1, " Left Y %d", str);
+		// pros::lcd::print(2, " Right X %d", rcw); 
+
+        //right joystick scaling
+        rcw = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+        int sign = signum(rcw);
+        double temp_rcw = abs(rcw)/127.0;
+        //scale input based on a x^3.75 curve
+        temp_rcw = pow(temp_rcw, 3.75);
+        temp_rcw = temp_rcw * 127.0 * sign;
+        rcw = (int)temp_rcw;
 
 		//swerve drive!!!!
-    	// sdrive.move(fwd/127.0, str/127.0, rcw/254.0, 1);
+    	if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
+            sdrive.move(0, 0, 0.005, 1);
+            idle = true;
+        }else{
+            sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
+            idle = false;
+        }
 
         //trigger the PID of the liftController to maintain height
-        liftController.update();
+        if(L2) {
+            pros::Task goToLowerScore(LiftController().goToHeight, LiftController().lowerScoreHeight, "Lower Score Height");
+            pros::delay(1000);
+
+            pros::Task goToIdleHeight(LiftController().goToHeight, LiftController().idleHeight, "Idle Height");
+            pros::delay(10);
+
+        }
+
+        //trigger the PID of the liftController to maintain height
+        // liftController.update();
         if (up) {
-            liftController.ascend(NULL);
-        } 
-        if (down) {
-            liftController.descend(NULL);
-        }
-        if (right) {
-            liftController.zeroEncoder();
+            lift.move(60);
+        }else if (down) {
+            lift.move(-60);
+        } else {
+            lift.move(0);
         }
 
 
-    	if (up) {
-    	    sdrive.reset_position();
-			// pros::lcd::print(3, " up"); 
-    	}
+    	// if (up) {
+    	//     sdrive.reset_position();
+		// 	pros::lcd::print(3, " up"); 
+    	// }
     
         if (R2){
             IntakeController().intakeForward(NULL);
