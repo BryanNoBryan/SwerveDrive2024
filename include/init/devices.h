@@ -15,41 +15,32 @@
 // Controllers
 extern pros::Controller controller;
 
+// Drivetrain encoders
+extern pros::Rotation rightFrontEncoder;
+extern pros::Rotation leftFrontEncoder;
+extern pros::Rotation leftBackEncoder;
+extern pros::Rotation rightBackEncoder;
+
 // Drivetrain motors & MotorGroups
 
 // Left Front
 extern pros::Motor leftFrontTopMotor;
 extern pros::Motor leftFrontBottomMotor;
 
-extern pros::MotorGroup leftFrontForward;
-extern pros::MotorGroup leftFrontRotate;
-
-
 // Left Back
 extern pros::Motor leftBackTopMotor;
 extern pros::Motor leftBackBottomMotor;
 
-extern pros::MotorGroup leftBackForward;
-extern pros::MotorGroup leftBackRotate;
-
 // Temporary
 extern pros::MotorGroup driveLeft;
-
 
 // Right Front
 extern pros::Motor rightFrontTopMotor;
 extern pros::Motor rightFrontBottomMotor;
 
-extern pros::MotorGroup rightFrontForward;
-extern pros::MotorGroup rightFrontRotate;
-
-
 // Right Back
 extern pros::Motor rightBackTopMotor;
 extern pros::Motor rightBackBottomMotor;
-
-extern pros::MotorGroup rightBackForward;
-extern pros::MotorGroup rightBackRotate;
 
 // Temporary
 extern pros::MotorGroup driveRight;
@@ -63,5 +54,16 @@ extern pros::adi::DigitalOut rxtx_enable;
 
 // Sensors
 extern pros::Imu imu;
+
+// Intake
+extern pros::Motor intakeLeft;
+extern pros::Motor intakeRight;
+extern pros::MotorGroup intake;
+
+//Lift
+extern pros::Motor liftLeftTop;
+extern pros::Motor liftLeftBottom;
+extern pros::Motor liftRightTop;
+extern pros::Motor liftRightBottom;
 
 #endif
