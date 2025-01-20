@@ -1,4 +1,5 @@
 #include "init/devices.h"
+#include "pros/adi.hpp"
 
 // Controllers
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -30,31 +31,25 @@ pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::blue, pros::v5::
 // Temporary
 pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
+//Intake
+pros::Motor intake(-3, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
+// Enables serial communication between the vex brain and arduino by sending a 5V DC signal
+pros::adi::DigitalOut rxtx_enable('A');
+
+//Lift
+pros::Motor liftLeft(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+
 // Sensors
 pros::Rotation leftFrontEncoder(-19);
 pros::Rotation leftBackEncoder(13);
 pros::Rotation rightFrontEncoder(-3);
 pros::Rotation rightBackEncoder(18);
 
-
-//Intake
-pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-pros::MotorGroup intake({14, -15}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-// Enables serial communication between the vex brain and arduino by sending a 5V DC signal
-pros::adi::DigitalOut rxtx_enable('A');
-
-// Sensors
 pros::Imu imu(9);
 
-//Lift
-pros::Motor liftLeftTop(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftLeftBottom(20, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-pros::Motor liftRightTop(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftRightBottom(12, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Optical mogoOptical(1);
 
 //Mogo Clamp
 pros::adi::Pneumatics clampLeft('C', true, false);
