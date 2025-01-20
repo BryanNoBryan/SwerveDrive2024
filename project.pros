@@ -299,7 +299,7 @@
     },
     "upload_options": {
       "description": "Swerve Drivetrain",
-      "icon": "power"
+      "icon": "power",
       "slot": 1
     },
     "use_early_access": false

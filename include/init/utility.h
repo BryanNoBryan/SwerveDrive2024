@@ -5,6 +5,7 @@
 #define PROS_USE_LITERALS
 
 #include <cmath>
+#include <string>
 
 extern std::string robot_problems;
 
