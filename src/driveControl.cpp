@@ -97,7 +97,6 @@ void driveControl()
 		pros::delay(10);
 
         //Toggle Mogo Clamp
-        bool L1 = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
 
         if(L1) {
             //closes clamp if currently toggled
