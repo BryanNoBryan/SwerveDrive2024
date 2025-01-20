@@ -66,4 +66,8 @@ extern pros::Motor liftLeftBottom;
 extern pros::Motor liftRightTop;
 extern pros::Motor liftRightBottom;
 
+//MogoClamp
+extern pros::adi::Pneumatics clampLeft;
+extern pros::adi::Pneumatics clampRight;
+
 #endif
