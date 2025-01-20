@@ -24,13 +24,11 @@ pros::Motor rightFrontBottomMotor(5, pros::v5::MotorGears::blue, pros::v5::Motor
 pros::Motor rightBackTopMotor(6, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 pros::Motor rightBackBottomMotor(7, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
-
 // Temporary
 pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Temporary
 pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
 
 // Sensors
 pros::Rotation leftFrontEncoder(-19);
@@ -45,6 +43,11 @@ pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUn
 
 pros::MotorGroup intake({14, -15}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
+// Enables serial communication between the vex brain and arduino by sending a 5V DC signal
+pros::adi::DigitalOut rxtx_enable('A');
+
+// Sensors
+pros::Imu imu(9);
 
 //Lift
 pros::Motor liftLeftTop(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);

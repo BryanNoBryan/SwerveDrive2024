@@ -6,6 +6,8 @@
 
 #include <cmath>
 
+extern std::string robot_problems;
+
 class Vector2d {
     public:
         double x;

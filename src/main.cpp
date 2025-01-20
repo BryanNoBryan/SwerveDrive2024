@@ -30,19 +30,31 @@ void initialize() {
 	chassis.calibrate();
     chassis.setPose(0, 0, 0);
 
+    // Start serial on desired port
+    vexGenericSerialEnable(SERIALPORT - 1, 0);
+
+    // Set BAUD rate
+    vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
+
     //Print to brain's screen
-	pros::Task screenTask([&]() {
+    pros::Task screenTask([&]()
+                          {
+
         while (true) {
+            // rxtx_enable.set_value(true);
+            //pros::Task arduinoData(serial_read);
             // print robot location to the brain screen
-            pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-            pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-            pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+            pros::lcd::print(0, "PosX %4.2f PosY %4.2f PosH %4.2f", otos_data[0], otos_data[1], otos_data[2]);
+            pros::lcd::print(1, "VelX %4.2f VelY %4.2f VelH %4.2f", otos_data[3], otos_data[4], otos_data[5]);
+            pros::lcd::print(2, "AccX %4.2f AccY %4.2f AccH %4.2f", otos_data[6], otos_data[7], otos_data[8]);
+            //pros::lcd::print(4, "%s", max485_data.substr(0, max485_data.size()/3));
+            //pros::lcd::print(5, "%s", max485_data.substr(max485_data.size()/3, max485_data.size()/3));
+            //pros::lcd::print(6, "%s", max485_data.substr(2 * max485_data.size() / 3, max485_data.size() / 3));
             // log position telemetry
             lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
             // delay to save resources
             pros::delay(50);
-        }
-    });
+        } });
 }
 
 /**

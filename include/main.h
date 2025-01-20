@@ -38,6 +38,7 @@
 #include "autons/matchAuton.h"
 #include "driveControl.h"
 #include "drive/driveTrain.h"
+#include "serial/serial_comm.h"
 
 /**
  * You should add more #includes here
