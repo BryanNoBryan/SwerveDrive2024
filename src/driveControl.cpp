@@ -25,11 +25,8 @@ void driveControl()
 	{
 		rxtx_enable.set_value(true);
 		serial_read(NULL);
-		// Gets input from controller joysticks
-        motorSpeedX = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
-        motorSpeedY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 
-        // Strafing with automatic turn
+		// Gets input from controller joysticks
         fwd = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         str = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 		rcw = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
