@@ -55,6 +55,9 @@ pros::Imu imu(9);
 
 pros::Optical mogoOptical(1);
 
+pros::adi::Potentiometer leftPot('A', pros::E_ADI_POT_EDR);
+pros::adi::Potentiometer rightPot('B', pros::E_ADI_POT_EDR);
+
 //Mogo Clamp
 pros::adi::Pneumatics clampLeft('C', true, false);
 pros::adi::Pneumatics clampRight('C', true, false);
