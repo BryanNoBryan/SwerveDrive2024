@@ -10,7 +10,7 @@ void purePursuit::runPath(vector<PPoint> path) {
     run(path);
 }
 
-void purePursuit::runPath(vector<PPoint> path) {
+void purePursuit::runPath(vector<PPoint> path, double endTheta) {
     purePursuit::pointer = 1;
     purePursuit::endCount = 0;
     purePursuit::endTheta = endTheta;
