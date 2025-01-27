@@ -3,15 +3,10 @@
 
 #define PROS_USE_SIMPLE_NAMES
 #define PROS_USE_LITERALS
-// margin of error of height, units: ticks
-#define LIFT_MARGIN_OF_ERROR 50
-// height where all the elastic bands are extended into a neutral state, units: ticks
-#define HEIGHT_WHEN_ELASTIC_BANDS_SLACK 600
-#define GRAVITY_MULTIPLER 1
-#define ELASTIC_BAND_MULTIPLER 1
 
 #include "api.h"
 #include "init/devices.h"
+#include "lemlib/pid.hpp"
 
 using namespace std;
 
@@ -19,66 +14,57 @@ class LiftController
 {
 private:
     // PID Constants
-    static constexpr double kP = 1.3;
+    static constexpr double kP = 15;
     static constexpr double kI = 0;
-    static constexpr double kD = 0;
-    
-    // Error tracking
-    static double lastError;
-    static double integral;
+    static constexpr double kD = 2;
 
-    /**
-     * @brief calculates power each motor should run at each height, accounts for gravity and elastic bands
-     */
-    static double calculatePIDF(double target, double current);
+    static constexpr double gearRatio = 0.5; // Lift moves 1/2 as fast as motor
+    
+    lemlib::PID leftPID;
+    lemlib::PID rightPID;
 
 public:
-    static double currentHeight;
-    static double* targetHeight;
+    double currentHeight;
+    double targetHeight;
 
-    double idleHeightValue = 0;
-    double ringHeightValue = -5;
-    double lowerScoreHeightValue = -4000;
-    double upperScoreHeightValue = 1000;
-
-    double* idleHeight = &idleHeightValue;
-    double* ringHeight = &ringHeightValue;
-    double* lowerScoreHeight = &lowerScoreHeightValue;
-    double* upperScoreHeight = &upperScoreHeightValue;
+    static constexpr double maximumHeight = 70;
 
     /**
      * @brief Get current height, 0 is lowest, + is up
      */
-    static double getHeight();
+    double getHeight();
 
     /**
      * @brief Go to a set height, 0 is lowest, + is up
      */
-	static void goToHeight(void* height);
-
-    // /**
-    //  * @brief ascend up at a set speed
-    //  */
-	// void ascend(void* ignore);
-
-    // /**
-    //  * @brief descend down at a set speed
-    //  */
-	// void descend(void* ignore);
+	void goToHeight(double height);
 
     /**
      * @brief updates PID and power of each motor, call it in driveControl
      */
-    static void update();
+    void update();
 
     /**
      * @brief sets zero position of the lift encoder
      */
-    static void zeroEncoder();
+    void zeroEncoder();
 
     // constructor
     LiftController();
 
 };
+
+class LiftHeight {
+    int index;
+public:
+    static constexpr int length() {return 2;}
+    LiftHeight() : index(0) {}
+    constexpr explicit LiftHeight(int index) : index(index) {}
+    constexpr operator int() const { return index; }
+
+    double getHeight() const;
+};
+constexpr LiftHeight LIFT_DOWN(0);
+constexpr LiftHeight LIFT_UP(1);
 
 #endif

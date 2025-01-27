@@ -61,6 +61,9 @@ extern pros::Motor liftRight;
 
 extern pros::MotorGroup lift;
 
+//Bucket
+extern pros::Motor bucket;
+
 // Sensors
 extern pros::Imu imu;
 
@@ -70,7 +73,6 @@ extern pros::adi::Potentiometer rightPot;
 extern pros::Optical mogoOptical;
 
 //MogoClamp
-extern pros::adi::Pneumatics clampLeft;
-extern pros::adi::Pneumatics clampRight;
+extern pros::adi::Pneumatics mogoClamp;
 
 #endif
