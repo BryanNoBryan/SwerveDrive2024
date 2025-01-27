@@ -204,9 +204,11 @@ void driveControl()
     bucketController.zeroEncoder();
 
     bool lastScore = false;
-
     bool clampState = false;
     bool lastToggle = false;
+    double lastDistance = mogoOptical.get_proximity();
+    bool doinkState = false;
+    bool lastDoink = false;
 
     //Reset position
     // otos_offset[0] = -otos_data[0];
@@ -216,9 +218,6 @@ void driveControl()
     bool intakeIn, intakeOut, score, toggleClamp, liftUp, liftDown, doink;
 
     imu.reset();
-
-    bool doinkState = false;
-    bool lastDoink = false;
 
 	while (true)
 	{
@@ -277,15 +276,15 @@ void driveControl()
         // }
 
 		//swerve drive!!!!
-        // if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
-        //     sdrive.move(0, 0, 0.5, 1);
-        //     idle = true;
-        // }else{
-        //     sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
-        //     idle = false;
-        // }
+        if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
+            sdrive.move(0, 0, 0.002, 1);
+            idle = true;
+        }else{
+            sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
+            idle = false;
+        }
 
-        sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
+        // sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
 
 
         //Lift controls
@@ -318,15 +317,19 @@ void driveControl()
             intake.move(0);
         }
 
-        if (toggleClamp && !lastToggle) {
+        //Toggle Mogo Clamp
+        if(toggleClamp) {
             if (clampState) {
                 mogoClamp.set_value(LOW);
-            }
-            else {
+            }else {
                 mogoClamp.set_value(HIGH);
             }
 
             clampState = !clampState;
+        }else {
+            if(mogoOptical.get_proximity() > lastDistance){
+                mogoClamp.set_value(HIGH);
+            }
         }
         lastToggle = toggleClamp;
 

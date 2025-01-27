@@ -43,12 +43,12 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     double maxVel = 0.9;
     double maxSpeed = max(abs(speed1), max(abs(speed2), max(abs(speed3), abs(speed4))));
 
-    printf("maxSpeed %f\n", maxSpeed);
-    printf("angle1 %f\n", angle1);
-    printf("angle2 %f\n", angle2);
-    printf("angle3 %f\n", angle3);
-    printf("angle4 %f\n", angle4);
-    printf("\n\n");
+    // printf("maxSpeed %f\n", maxSpeed);
+    // printf("angle1 %f\n", angle1);
+    // printf("angle2 %f\n", angle2);
+    // printf("angle3 %f\n", angle3);
+    // printf("angle4 %f\n", angle4);
+    // printf("\n\n");
 
     if (maxSpeed > maxVel){
         speed1 = speed1 * (maxVel/maxSpeed);

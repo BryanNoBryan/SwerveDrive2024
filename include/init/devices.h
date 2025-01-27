@@ -5,7 +5,7 @@
 #define PROS_USE_LITERALS
 
 // Port to use for serial data
-#define SERIALPORT 7
+#define SERIALPORT 18
 
 #include "api.h"
 #include "pros/motor_group.hpp"
