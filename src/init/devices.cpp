@@ -35,7 +35,7 @@ pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5
 pros::Motor intake(-5, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Enables serial communication between the vex brain and arduino by sending a 5V DC signal
-pros::adi::DigitalOut rxtx_enable('A');
+pros::adi::DigitalOut rxtx_enable('E');
 
 //Lift
 pros::Motor liftLeft(-4, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);

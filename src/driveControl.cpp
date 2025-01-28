@@ -148,7 +148,7 @@
 //             IntakeController().stop(NULL);
 //         }
 
-// 		pros::delay(10);
+// 		pros::delay(10);  
 
 //         //Toggle Mogo Clamp
 
@@ -221,6 +221,10 @@ void driveControl()
 
 	while (true)
 	{
+
+        rxtx_enable.set_value(HIGH);
+        serial_read(nullptr);
+
 		// Gets input from controller joysticks
         float fwd = -controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
         float str = -controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
