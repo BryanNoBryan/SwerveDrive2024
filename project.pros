@@ -299,8 +299,8 @@
     },
     "upload_options": {
       "description": "Swerve Drivetrain",
-      "icon": "planet",
-      "slot": 2
+      "icon": "pizza",
+      "slot": 3
     },
     "use_early_access": false
   }

@@ -225,16 +225,28 @@ void driveControl()
 
 	while (true)
 	{
-
         rxtx_enable.set_value(HIGH);
         serial_read(nullptr);
 
 		// Gets input from controller joysticks
-        float fwd = -controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        float str = -controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
-		float rcw = -controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+        float fwd = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        float str = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+		float rcw = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-        // double robotHeading = -imu.get_heading() * M_PI/180;//Get Heading
+        fwd *= -1;
+        str *= -1;
+        rcw *= -1;
+
+        // Field centric
+        double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
+        str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
+        fwd = temp;
+
+        fwd *= -1;
+        str *= -1;
+       
+
+        // double robotHeading = -otos_data[2] * M_PI/180;
         // double desiredDirection = atan2f(fwd, str) - M_PI/2;
         // double relativeDirection = -calcAngleDiff(desiredDirection, robotHeading);
 
@@ -285,7 +297,7 @@ void driveControl()
 
 		//swerve drive!!!!
         if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
-            sdrive.move(0, 0, 0.05, 1);
+            sdrive.move(0, 0, 0.005, 1);
             idle = true;
         }else if(fwd == 0 && str == 0 && rcw == 0 && idle){
             sdrive.move(0, 0, 0, 1);
@@ -339,7 +351,7 @@ void driveControl()
             }else {
                 mogoClamp.set_value(HIGH);
             }
-
+            lastToggleTime = timer;
             clampState = !clampState;
         }else if(!clampState && timer-lastToggleTime > 500 && mogoOptical.get_proximity() > lastDistance && mogoOptical.get_proximity() > 253){
             mogoClamp.set_value(HIGH);
