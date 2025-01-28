@@ -1,7 +1,7 @@
 #include "drive/SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 2
+#define ANGLE_MARGIN_OF_ERROR 0.75
 // max velocity of motors, in RPM ticks
 #define MAX_MOTOR_SPEED_TICKS 3
 
@@ -51,10 +51,10 @@ double SwerveDriveWheel::calculatePID(double target, double current)
     // Calculate PID output
     double output_power = (kP * error) + (kI * integral) + (kD * derivative);
 
-    if(output_power > 100) {
-        output_power = 100;
-    } else if (output_power < -100) {
-        output_power = -100;
+    if(output_power > 127) {
+        output_power = 127;
+    } else if (output_power < -127) {
+        output_power = -127;
     }
     
     // Scale output to reasonable motor power
@@ -74,6 +74,10 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
     double angleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(angle));
     double oppAngleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(opp_angle));
 
+    // pros::lcd::print(4, " target_r %.3f", target_r);
+    // pros::lcd::print(5, " current_r %.3f", current_r);
+    // pros::lcd::print(6, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
+
     //set new variable values if the oppAngle is a shorter distance
     if (abs(oppAngleFromTarget) < abs(angleFromTarget)) {
         angleFromTarget = oppAngleFromTarget;
@@ -85,9 +89,7 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         speed *= -1.0;
     }
 
-    pros::lcd::print(3, " target_r %.3f", target_r);
-    pros::lcd::print(4, " current_r %.3f", current_r);
-    pros::lcd::print(5, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
+    speed *= cos(reverse ? angleFromTarget : oppAngleFromTarget);
 
     double rPower = calculatePID(target_r, current_r);
 
@@ -125,6 +127,9 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         double sum1 = -speed + rPower;
         double sum2 = speed + rPower;
 
+        // motor1->move( (-speed + rPower));
+        // motor2->move( (speed + rPower));
+
         //delta = the overflow of the max mumber above range, which when subtracted
         //from either motor power sums, EFFECTIVELY only subtracts from the 
         //linear speed, keeping rotational power
@@ -155,8 +160,8 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
             motor2->move(sum2 - delta);
         }
         
-        pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
-        pros::lcd::print(7, "motor 2: %f, %f", sum2,  delta);
+        // pros::lcd::print(6, "motor 1: %f, %f", sum1, delta);
+        // pros::lcd::print(7, "motor 2: %f, %f", sum2,  delta);
 
     } else {
         //when input power is 0, to eliminate rapid angle changes

@@ -1,10 +1,13 @@
 #include "autons/matchAuton.h"
 #include "drive/purePursuit/purePursuit.h"
-
+#include "serial/serial_comm.h"
 
 void matchAuton(){
-    purePursuit purePursuit;
+    rxtx_enable.set_value(true);
+    serial_read(NULL);
 
+    purePursuit purePursuit;
+    
     vector<PPoint> path = vector<PPoint>();
     path.push_back(PPoint(0, 12.0, 0.0));
     path.push_back(PPoint(-40.0, 24.0, 0.0));
