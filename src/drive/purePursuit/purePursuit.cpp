@@ -1,4 +1,5 @@
 #include "drive/purePursuit/purePursuit.h"
+#include "serial/serial_comm.h"
 
 void purePursuit::runPath(vector<PPoint> path) {
     purePursuit::pointer = 1;
@@ -29,8 +30,8 @@ void purePursuit::run(vector<PPoint> path) {
     purePursuit::yPID.reset();
     purePursuit::thetaPID.reset();
 
-    // TODO: REPLACE "chassis.getPose()" WITH THE NEW POSITION CALL
-    lemlib::Pose pos = chassis.getPose();
+    lemlib::Pose pos(otos_data[0], otos_data[1], otos_data[2]);
+
     path.insert(path.begin(), PPoint(pos.x, pos.y, pos.theta));
     purePursuit::lastPosition = vector<double> {pos.x, pos.y, pos.theta};
 
@@ -40,8 +41,7 @@ void purePursuit::run(vector<PPoint> path) {
     auto loopTime = chrono::steady_clock::now();
     
     while (purePursuit::endCount < 3) {
-        // TODO: REPLACE "chassis.getPose()" WITH THE NEW POSITION CALL
-        lemlib::Pose pos = chassis.getPose();
+        lemlib::Pose pos(otos_data[0], otos_data[1], otos_data[2]);
 
         // Ensures the target point is not the last point
         if (path.size() - 1 > pointer) {
