@@ -1,4 +1,5 @@
 #include "init/devices.h"
+#include "pros/adi.hpp"
 
 // Controllers
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -9,49 +10,47 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // This logic extends to the other motors
 
 // Left Front
-pros::Motor leftFrontTopMotor(9, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor leftFrontBottomMotor(10, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftFrontTopMotor(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftFrontBottomMotor(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Left Back
-pros::Motor leftBackTopMotor(1, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor leftBackBottomMotor(2, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftBackTopMotor(13, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftBackBottomMotor(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Right Front
-pros::Motor rightFrontTopMotor(4, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor rightFrontBottomMotor(5, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontTopMotor(20, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightFrontBottomMotor(17, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Right Back
-pros::Motor rightBackTopMotor(6, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor rightBackBottomMotor(7, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-// Temporary
-pros::MotorGroup driveLeft({1,-2, 3, -4}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-// Temporary
-pros::MotorGroup driveRight({5, -6, 7, -8}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-// Sensors
-pros::Rotation leftFrontEncoder(-19);
-pros::Rotation leftBackEncoder(13);
-pros::Rotation rightFrontEncoder(-3);
-pros::Rotation rightBackEncoder(18);
-
+pros::Motor rightBackTopMotor(16, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor rightBackBottomMotor(19, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 //Intake
-pros::Motor intakeLeft(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor intakeRight(15, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-
-pros::MotorGroup intake({14, -15}, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor intake(-5, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
 // Enables serial communication between the vex brain and arduino by sending a 5V DC signal
-pros::adi::DigitalOut rxtx_enable('A');
-
-// Sensors
-pros::Imu imu(9);
+pros::adi::DigitalOut rxtx_enable('E');
 
 //Lift
-pros::Motor liftLeftTop(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftLeftBottom(20, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftLeft(-4, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(8, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
-pros::Motor liftRightTop(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftRightBottom(12, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::MotorGroup lift({-4, 8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+
+pros::Motor bucket(2, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
+
+// Sensors
+pros::Rotation leftFrontEncoder(1);
+pros::Rotation leftBackEncoder(-6);
+pros::Rotation rightFrontEncoder(10);
+pros::Rotation rightBackEncoder(-9);
+
+pros::Imu imu(7);
+
+pros::Optical mogoOptical(12);
+
+pros::adi::Potentiometer leftPot('D', pros::E_ADI_POT_EDR);
+pros::adi::Potentiometer rightPot('B', pros::E_ADI_POT_EDR);
+
+//Mogo Clamp
+pros::adi::Pneumatics mogoClamp('C', false, false);

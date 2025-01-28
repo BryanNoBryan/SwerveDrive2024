@@ -5,7 +5,7 @@
 #define PROS_USE_LITERALS
 
 // Port to use for serial data
-#define SERIALPORT 17
+#define SERIALPORT 18
 
 #include "api.h"
 #include "pros/motor_group.hpp"
@@ -31,9 +31,6 @@ extern pros::Motor leftFrontBottomMotor;
 extern pros::Motor leftBackTopMotor;
 extern pros::Motor leftBackBottomMotor;
 
-// Temporary
-extern pros::MotorGroup driveLeft;
-
 // Right Front
 extern pros::Motor rightFrontTopMotor;
 extern pros::Motor rightFrontBottomMotor;
@@ -42,9 +39,6 @@ extern pros::Motor rightFrontBottomMotor;
 extern pros::Motor rightBackTopMotor;
 extern pros::Motor rightBackBottomMotor;
 
-// Temporary
-extern pros::MotorGroup driveRight;
-
 // Prototypes for hidden vex functions to bypass PROS bug
 extern "C" int32_t vexGenericSerialReceive(uint32_t index, uint8_t *buffer, int32_t length);
 extern "C" void vexGenericSerialEnable(uint32_t index, uint32_t nu);
@@ -52,18 +46,27 @@ extern "C" void vexGenericSerialBaudrate(uint32_t index, uint32_t rate);
 
 extern pros::adi::DigitalOut rxtx_enable;
 
+// Intake
+extern pros::Motor intake;
+
+//Lift
+extern pros::Motor liftLeft;
+extern pros::Motor liftRight;
+
+extern pros::MotorGroup lift;
+
+//Bucket
+extern pros::Motor bucket;
+
 // Sensors
 extern pros::Imu imu;
 
-// Intake
-extern pros::Motor intakeLeft;
-extern pros::Motor intakeRight;
-extern pros::MotorGroup intake;
+extern pros::adi::Potentiometer leftPot;
+extern pros::adi::Potentiometer rightPot;
 
-//Lift
-extern pros::Motor liftLeftTop;
-extern pros::Motor liftLeftBottom;
-extern pros::Motor liftRightTop;
-extern pros::Motor liftRightBottom;
+extern pros::Optical mogoOptical;
+
+//MogoClamp
+extern pros::adi::Pneumatics mogoClamp;
 
 #endif

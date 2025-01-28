@@ -10,7 +10,8 @@
 #include "pros/misc.h"
 #include "macros/intakeController.h"
 #include "macros/liftController.h"
-#include "drive/driveTrain.h"
+#include "macros/bucketController.h"
+#include "macros/mogoClamp.h"
 #include "drive/SwerveDrive.h"
 #include "init/devices.h"
 #include <cmath>

@@ -12,10 +12,10 @@ void serial_read(void *params) {
     max485_data = "";
 
     // Start serial on desired port
-    //vexGenericSerialEnable(SERIALPORT - 1, 0);
+    vexGenericSerialEnable(SERIALPORT - 1, 0);
 
     // Set BAUD rate
-    //vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
+    vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
 
     // Let VEX OS configure port
     pros::delay(10);   

@@ -26,9 +26,6 @@ void initialize() {
 	pros::lcd::initialize();
 
     controller.rumble(".");
-    //Initialize chassis
-	chassis.calibrate();
-    chassis.setPose(0, 0, 0);
 
     // Start serial on desired port
     vexGenericSerialEnable(SERIALPORT - 1, 0);
@@ -50,8 +47,6 @@ void initialize() {
             //pros::lcd::print(4, "%s", max485_data.substr(0, max485_data.size()/3));
             //pros::lcd::print(5, "%s", max485_data.substr(max485_data.size()/3, max485_data.size()/3));
             //pros::lcd::print(6, "%s", max485_data.substr(2 * max485_data.size() / 3, max485_data.size() / 3));
-            // log position telemetry
-            lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
             // delay to save resources
             pros::delay(50);
         } });

@@ -3,8 +3,10 @@
 
 #define PROS_USE_SIMPLE_NAMES
 #define PROS_USE_LITERALS
+
 #include "api.h"
 #include "init/devices.h"
+#include "lemlib/pid.hpp"
 
 using namespace std;
 
@@ -12,22 +14,20 @@ class LiftController
 {
 private:
     // PID Constants
-    double kP = 1.3;
-    double kI = 0;
-    double kD = 0;
-    
-    // Error tracking
-    double lastError = 0;
-    double integral = 0;
+    static constexpr double kP = 15;
+    static constexpr double kI = 0;
+    static constexpr double kD = 2;
 
-    /**
-     * @brief calculates power each motor should run at each height, accounts for gravity and elastic bands
-     */
-    double calculatePIDF(double target, double current);
+    static constexpr double gearRatio = 0.5; // Lift moves 1/2 as fast as motor
+    
+    lemlib::PID leftPID;
+    lemlib::PID rightPID;
 
 public:
     double currentHeight;
     double targetHeight;
+
+    static constexpr double maximumHeight = 70;
 
     /**
      * @brief Get current height, 0 is lowest, + is up
@@ -38,16 +38,6 @@ public:
      * @brief Go to a set height, 0 is lowest, + is up
      */
 	void goToHeight(double height);
-
-    /**
-     * @brief ascend up at a set speed
-     */
-	void ascend(void* ignore);
-
-    /**
-     * @brief descend down at a set speed
-     */
-	void descend(void* ignore);
 
     /**
      * @brief updates PID and power of each motor, call it in driveControl
@@ -63,5 +53,18 @@ public:
     LiftController();
 
 };
+
+class LiftHeight {
+    int index;
+public:
+    static constexpr int length() {return 2;}
+    LiftHeight() : index(0) {}
+    constexpr explicit LiftHeight(int index) : index(index) {}
+    constexpr operator int() const { return index; }
+
+    double getHeight() const;
+};
+constexpr LiftHeight LIFT_DOWN(0);
+constexpr LiftHeight LIFT_UP(1);
 
 #endif
