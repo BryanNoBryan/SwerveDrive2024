@@ -204,9 +204,13 @@ void driveControl()
     bucketController.zeroEncoder();
 
     bool lastScore = false;
+
     bool clampState = false;
     bool lastToggle = false;
     double lastDistance = mogoOptical.get_proximity();
+    int lastToggleTime = 0;
+    int timer = 0;
+
     bool doinkState = false;
     bool lastDoink = false;
 
@@ -281,8 +285,10 @@ void driveControl()
 
 		//swerve drive!!!!
         if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
-            sdrive.move(0, 0, 0.002, 1);
+            sdrive.move(0, 0, 0.05, 1);
             idle = true;
+        }else if(fwd == 0 && str == 0 && rcw == 0 && idle){
+            sdrive.move(0, 0, 0, 1);
         }else{
             sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
             idle = false;
@@ -311,18 +317,23 @@ void driveControl()
         }
         lastScore = score;
 
+        //Intake controls
         if (intakeIn) {
-            intake.move(127);
+            IntakeController().intakeForward(NULL);
         }
         else if (intakeOut) {
-            intake.move(-127);
+            IntakeController().intakeReverse(NULL);
         }
         else {
-            intake.move(0);
+            IntakeController().stop(NULL);
         }
 
+        pros::lcd::print(5, "Toggle Time: %d", timer-lastToggleTime);
+        pros::lcd::print(6, "Mogo Clamp: %d", clampState);
+        pros::lcd::print(7, "Mogo Distance: %d", mogoOptical.get_proximity());
+
         //Toggle Mogo Clamp
-        if(toggleClamp) {
+        if(toggleClamp && !lastToggle) {
             if (clampState) {
                 mogoClamp.set_value(LOW);
             }else {
@@ -330,11 +341,12 @@ void driveControl()
             }
 
             clampState = !clampState;
-        }else {
-            if(mogoOptical.get_proximity() > lastDistance){
-                mogoClamp.set_value(HIGH);
-            }
+        }else if(!clampState && timer-lastToggleTime > 500 && mogoOptical.get_proximity() > lastDistance && mogoOptical.get_proximity() > 253){
+            mogoClamp.set_value(HIGH);
+            lastToggleTime = timer;
+            clampState = true;
         }
+        lastDistance = mogoOptical.get_proximity();
         lastToggle = toggleClamp;
 
         // if (doink && !lastDoink) {
@@ -350,5 +362,6 @@ void driveControl()
         // lastDoink = doink;
 
 		pros::delay(10);
+        timer += 10;
 	}
 }
