@@ -31,9 +31,6 @@ extern pros::Motor leftFrontBottomMotor;
 extern pros::Motor leftBackTopMotor;
 extern pros::Motor leftBackBottomMotor;
 
-// Temporary
-extern pros::MotorGroup driveLeft;
-
 // Right Front
 extern pros::Motor rightFrontTopMotor;
 extern pros::Motor rightFrontBottomMotor;
@@ -41,9 +38,6 @@ extern pros::Motor rightFrontBottomMotor;
 // Right Back
 extern pros::Motor rightBackTopMotor;
 extern pros::Motor rightBackBottomMotor;
-
-// Temporary
-extern pros::MotorGroup driveRight;
 
 // Prototypes for hidden vex functions to bypass PROS bug
 extern "C" int32_t vexGenericSerialReceive(uint32_t index, uint8_t *buffer, int32_t length);
