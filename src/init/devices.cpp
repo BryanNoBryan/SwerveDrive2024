@@ -53,7 +53,7 @@ pros::Rotation rightBackEncoder(-9);
 
 pros::Imu imu(7);
 
-pros::Optical mogoOptical(11);
+pros::Optical mogoOptical(12);
 
 pros::adi::Potentiometer leftPot('D', pros::E_ADI_POT_EDR);
 pros::adi::Potentiometer rightPot('B', pros::E_ADI_POT_EDR);

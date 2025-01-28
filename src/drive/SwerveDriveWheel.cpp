@@ -1,7 +1,7 @@
 #include "drive/SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 2
+#define ANGLE_MARGIN_OF_ERROR 0.75
 // max velocity of motors, in RPM ticks
 #define MAX_MOTOR_SPEED_TICKS 3
 
@@ -74,9 +74,9 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
     double angleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(angle));
     double oppAngleFromTarget = calcAngleDiff(degreesToRadians(getAngle()), degreesToRadians(opp_angle));
 
-    pros::lcd::print(4, " target_r %.3f", target_r);
-    pros::lcd::print(5, " current_r %.3f", current_r);
-    pros::lcd::print(6, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
+    // pros::lcd::print(4, " target_r %.3f", target_r);
+    // pros::lcd::print(5, " current_r %.3f", current_r);
+    // pros::lcd::print(6, " angleFromTarget %.3f", radiansToDegrees(angleFromTarget));
 
     //set new variable values if the oppAngle is a shorter distance
     if (abs(oppAngleFromTarget) < abs(angleFromTarget)) {
