@@ -33,9 +33,9 @@ pros::adi::DigitalOut rxtx_enable('E');
 
 //Lift
 pros::Motor liftLeft(-4, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor liftRight(8, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor liftRight(9, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
-pros::MotorGroup lift({-4, 8}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
+pros::MotorGroup lift({-4, 9}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
 pros::Motor bucket(2, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
 
@@ -43,9 +43,9 @@ pros::Motor bucket(2, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::de
 pros::Rotation leftFrontEncoder(1);
 pros::Rotation leftBackEncoder(-6);
 pros::Rotation rightFrontEncoder(10);
-pros::Rotation rightBackEncoder(-9);
+pros::Rotation rightBackEncoder(-7);
 
-pros::Imu imu(7);
+pros::Imu imu(8);
 
 pros::Optical mogoOptical(12);
 
