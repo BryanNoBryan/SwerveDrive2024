@@ -12,8 +12,11 @@ class PPoint {
         double maxSpeed = 1, turnSpeed = 0.6;
         bool fieldCentric = false;
 
-        PPoint(double x, double y, double theta) {x = PPoint::x; y = PPoint::y; PPoint::theta;};
-        PPoint(double x, double y, double theta, bool strafe) {x = PPoint::x; y = PPoint::y; PPoint::theta; strafe = PPoint::strafe;};
+        PPoint(double inputX, double inputY, double inputTheta) {x = inputX; y = inputY; theta = inputTheta;};
+        PPoint(double inputX, double inputY, double inputTheta, bool inputStrafe) {x = inputX; y = inputY; theta = inputTheta; strafe = inputStrafe;};
+        double getX() {return x;};
+        double getY() {return y;};
+        double getTheta() {return theta;};
 };
 
 #endif
