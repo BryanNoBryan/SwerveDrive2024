@@ -8,13 +8,22 @@
 // radius from center to each wheel
 const double R = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
-lemlib::PID testPID (1, 0, 0, 10, false);
+lemlib::PID testPID(1, 0, 0, 10, false);
+
+const double rotKP = 0.4;
+const double rotKI = 0;
+const double rotKD = 0;
+
+lemlib::PID rightFrontPID (rotKP, rotKI, rotKD, 5, false);
+lemlib::PID leftFrontPID (rotKP, rotKI, rotKD, 5, false);
+lemlib::PID leftBackPID (rotKP, rotKI, rotKD, 5, false);
+lemlib::PID rightBackPID (rotKP, rotKI, rotKD, 5, false);
 
 SwerveDrive::SwerveDrive() :
-    rightFront(&rightFrontTopMotor, &rightFrontBottomMotor, &rightFrontEncoder, testPID, true),
-    leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, &leftFrontEncoder, testPID, true),
-    leftBack(&leftBackTopMotor, &leftBackBottomMotor, &leftBackEncoder, testPID, false),
-    rightBack(&rightBackTopMotor, &rightBackBottomMotor, &rightBackEncoder, testPID, false) 
+    rightFront(&rightFrontTopMotor, &rightFrontBottomMotor, &rightFrontEncoder, rightFrontPID, true),
+    leftFront(&leftFrontTopMotor, &leftFrontBottomMotor, &leftFrontEncoder, leftFrontPID, true),
+    leftBack(&leftBackTopMotor, &leftBackBottomMotor, &leftBackEncoder, leftBackPID, false),
+    rightBack(&rightBackTopMotor, &rightBackBottomMotor, &rightBackEncoder, rightBackPID, false) 
 {}
 
 // anglewrapped [-180, 180], positive is clockwise, zero is straight ahead

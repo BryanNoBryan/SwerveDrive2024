@@ -1,7 +1,7 @@
 #include "drive/SwerveDriveWheel.h"
 
 // in deg
-#define ANGLE_MARGIN_OF_ERROR 0.75
+#define ANGLE_MARGIN_OF_ERROR 1.5
 // max velocity of motors, in RPM ticks
 #define MAX_MOTOR_SPEED_TICKS 3
 
@@ -89,12 +89,12 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         speed *= -1.0;
     }
 
-    speed *= cos(reverse ? angleFromTarget : oppAngleFromTarget);
+    speed *= abs(cos(angleFromTarget));
 
     double rPower = calculatePID(target_r, current_r);
 
-    printf("speed %f\n", speed);
-    printf("rPower %f\n\n\n", rPower);
+    // printf("speed %f\n", speed);
+    // printf("rPower %f\n\n\n", rPower);
     /*
         ALL THE BELOW CODE IS TO OPTIMIZE 
         MOTOR POWER USAGE, AND HANDLE EDGE CASES

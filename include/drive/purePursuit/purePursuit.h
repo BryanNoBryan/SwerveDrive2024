@@ -36,13 +36,13 @@ class purePursuit{
         double curYVel = 0;
         double curThetaVel = 0;
 
-        lemlib::PID xPID = lemlib::PID(1, 0, 0);
-        lemlib::PID yPID = lemlib::PID(1, 0, 0);
-        lemlib::PID thetaPID = lemlib::PID(1, 0, 0);
+        lemlib::PID xPID = lemlib::PID(0.1, 0, 0);
+        lemlib::PID yPID = lemlib::PID(0.1, 0, 0);
+        lemlib::PID thetaPID = lemlib::PID(0.0001, 0, 0);
 
         double endTheta;
         // Tolerance of 2 inches in x and y and 3 degress in theta
-        vector<double> tolerance {2, 2, M_PI/60};
+        vector<double> tolerance {1, 1, M_PI/60};
 
         double timeout = -1; // In milliseconds (-1 means no timeout)
         bool stopAtWall = false; // Should the robot stop when it hits a wall (velocity is 0)

@@ -1,17 +1,23 @@
 #include "autons/matchAuton.h"
 #include "drive/purePursuit/purePursuit.h"
-#include "serial/serial_comm.h"
 
 void matchAuton(){
-    rxtx_enable.set_value(true);
-    serial_read(NULL);
+    leftFrontTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    leftFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    rightFrontTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    rightFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    leftBackTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    leftBackBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    rightBackTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    rightBackBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
     purePursuit purePursuit;
     
     vector<PPoint> path = vector<PPoint>();
-    path.push_back(PPoint(0, 12.0, 0.0));
-    path.push_back(PPoint(-40.0, 24.0, 0.0));
-    path.push_back(PPoint(-80.0, 40.0, 0.0));
-    path.push_back(PPoint(-80.0, 80.0, 0.0));
-    purePursuit.runPath(path, 1000);
+    path.push_back(PPoint(12.0, 0, 0.0));
+    // path.push_back(PPoint(-40.0, 24.0, 0.0));
+    // path.push_back(PPoint(-80.0, 40.0, 0.0));
+    // path.push_back(PPoint(-80.0, 80.0, 0.0));
+    
+    purePursuit.runPath(path);
 }
