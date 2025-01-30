@@ -4,7 +4,11 @@
 // Initialize data buffer
 std::string max485_data = "";
 float otos_data[9];
+float otos_offset[3];
 
+float otos_x;
+float otos_y;
+float otos_heading;
 
 void serial_read(void *params) {
 
@@ -17,10 +21,6 @@ void serial_read(void *params) {
     // Set BAUD rate
     vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
 
-    // Let VEX OS configure port
-    pros::delay(10);   
-
-
     // Buffer to store serial data
     uint8_t buffer[BUFFER_SIZE];
 
@@ -32,7 +32,7 @@ void serial_read(void *params) {
     int index = 0;
     bool record_data = true;
 
-    if (nRead >= 80) {  
+    if (nRead >= 80) {
         // Go through characters
         for (int i = 0; i < nRead; i++) {
             if (max485_data.size() >= 5 && max485_data.substr(0, 5) == "VEXPX")
@@ -56,10 +56,9 @@ void serial_read(void *params) {
             max485_data += (char)buffer[i];
 
         }
-            
     }
-    
 
-    // Delay to let serial data arrive
-    pros::delay(10);
+    otos_x = otos_data[0] + otos_offset[0];
+    otos_y = otos_data[1] + otos_offset[1];
+    otos_heading = otos_data[2] + otos_offset[2];
 }

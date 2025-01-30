@@ -16,6 +16,11 @@ void serial_read(void* params);
 extern std::string max485_data;
 
 extern float otos_data[9];
+extern float otos_offset[3];
+
+extern float otos_x;
+extern float otos_y;
+extern float otos_heading;
 
 // [0] -> pos_x
 // [1] -> pos_y
