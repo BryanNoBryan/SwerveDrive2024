@@ -15,6 +15,14 @@
 #include "drive/purePursuit/Timer.h"
 #include "drive/purePursuit/PID.h"
 
+class CheckpointPursuit {
+    Path path;
+    Timer timer;
 
+    CheckpointPursuit(Path path);
+
+    void run();
+    bool finished();
+};
 
 #endif

@@ -5,15 +5,11 @@
 #define max_angular_accel 1
 #define max_angular_vel 1
 
-class CheckpointPursuit {
-    Path path;
-    Timer timer;
-
-    CheckpointPursuit(Path path) : path(path) {
+    CheckpointPursuit::CheckpointPursuit(Path path) : path(path) {
 
     };
 
-    void run() {
+    void CheckpointPursuit::run() {
         PID pid(1, 0, 0, 0);
         //the vector that we need to traverse to finish the path
         Pose diffPose = path.end_pos.vectorDiff(path.start_pos);
@@ -36,7 +32,6 @@ class CheckpointPursuit {
         // 3. move heading to final_pos
     }
 
-    bool finished() {
+    bool CheckpointPursuit::finished() {
        path.reachedTarget();
     }
-};
