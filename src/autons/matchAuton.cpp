@@ -21,15 +21,23 @@ void matchAuton(){
     
     // purePursuit.runPath(path);
 
-    SwerveDrive sdrive;
+    // SwerveDrive sdrive;
 
-    sdrive.move(-0.8, 0, 0, 1);
-    pros::delay(2000);
+    // sdrive.move(-0.8, 0, 0, 1);
+    // pros::delay(2000);
 
-    sdrive.move(0, 0, 0.0001, 1);
-    pros::delay(100);
+    // sdrive.move(0, 0, 0.0001, 1);
+    // pros::delay(100);
 
-    sdrive.move(0, 0, 0, 1);
+    // sdrive.move(0, 0, 0, 1);
+
+    Pose target(15, 15, 45);
+    Pose current_pos = Pose::current_pos();
+    Path path(current_pos, target, true);
+    CheckpointPursuit auton(path);
+    auton.run();
+    while (!auton.finished()) {}
+
 
     // PathFollowing()
     //     .withPath({{otos_data[0], otos_data[1], otos_data[2]}, {12, otos_data[1], otos_data[2]}}, 1)

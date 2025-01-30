@@ -10,6 +10,10 @@
 #include "drive/purePursuit/purePursuit.h"
 #include "drive/purePursuit/pathFollowing.h"
 #include "drive/purePursuit/pathGeneration.h"
+#include "drive/purePursuit/Pose.h"
+#include "drive/purePursuit/Path.h"
+#include "drive/purePursuit/CheckpointPursuit.h"
+
 
 void matchAuton();
 
