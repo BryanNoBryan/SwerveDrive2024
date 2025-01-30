@@ -13,6 +13,7 @@
         //the vector that we need to traverse to finish the path
         Pose diffPose = path.end_pos.vectorDiff(path.start_pos);
         double error;
+        SwerveDrive sDrive;
 
         // 1. move heading in direction of vector
         PID pidRot1(1, 0, 0, 0);
@@ -21,7 +22,7 @@
         error = headingOfVector - otos_data[2];
         while (error > 10) { //degrees
             error = headingOfVector - otos_data[2];
-            driveTrain.move(0,0, pidRot1.update(error), 1);
+            sDrive.move(0,0, pidRot1.update(error), 1);
         }
         
 
@@ -38,7 +39,7 @@
             error = current_pos.distanceFrom(target_pos); 
             bool sign = current_pos.distanceFrom(path.end_pos) > target_pos.distanceFrom(path.end_pos);
             error *= sign ? 1 : -1;
-            driveTrain.move(0,pidLinear.update(error), 0, 1);
+            sDrive.move(0,pidLinear.update(error), 0, 1);
         }
         
 
@@ -46,13 +47,13 @@
         PID pidRot2(1, 0, 0, 0);
         double final_heading = path.end_pos.getTheta();
 
-        double error = final_heading - otos_data[2];
+        error = final_heading - otos_data[2];
         while (error > 10) { //degrees
             error = final_heading - otos_data[2];
-            driveTrain.move(0,0, pidRot2.update(error), 1);
+            sDrive.move(0,0, pidRot2.update(error), 1);
         }
     }
 
     bool CheckpointPursuit::finished() {
-       path.reachedTarget();
+       return path.reachedTarget();
     }
