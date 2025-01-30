@@ -89,7 +89,7 @@ void SwerveDriveWheel::move(double speed, double angle, double power)
         speed *= -1.0;
     }
 
-    speed *= abs(cos(angleFromTarget));
+    // speed *= abs(cos(angleFromTarget));
 
     double rPower = calculatePID(target_r, current_r);
 

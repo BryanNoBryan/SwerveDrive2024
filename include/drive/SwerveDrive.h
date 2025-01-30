@@ -9,6 +9,7 @@
 #include <cmath>
 #include "init/utility.h"
 #include "drive/SwerveDriveWheel.h"
+#include "serial/serial_comm.h"
 
 using namespace std;
 
