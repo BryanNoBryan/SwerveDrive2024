@@ -17,7 +17,7 @@ class Path {
     }
 
     bool reachedTarget() {
-        current_pos().distanceFrom(end_pos);
+        return current_pos().distanceFrom(end_pos) < REACHED_MARGIN;
     }
 
     double motion_profile(double max_acceleration, double max_velocity, double distance, double elapsed_time) {
