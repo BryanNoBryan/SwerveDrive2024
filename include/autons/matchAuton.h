@@ -8,6 +8,8 @@
 #include "init/utility.h"
 #include "drive/SwerveDrive.h"
 #include "drive/purePursuit/purePursuit.h"
+#include "drive/purePursuit/pathFollowing.h"
+#include "drive/purePursuit/pathGeneration.h"
 
 void matchAuton();
 

@@ -63,3 +63,28 @@ double angleWrap(double degrees) {
     // keep in mind that the result is in degrees
     return degrees;
 }
+
+double distanceFormula(vector<double> currentPosition, vector<double> lookAheadPosition) {
+	return sqrt(pow(lookAheadPosition[0] - currentPosition[0], 2) + pow(lookAheadPosition[1] - currentPosition[1], 2));;
+}
+
+/**
+ * Converts value from m/s to rpm
+ */
+double convertToRPM(double value, double wheelDiameter) {
+	return value / (2 * M_PI * wheelDiameter * 2.54) * (100 * 2 * 60.0);
+}
+
+/**
+ * Converts value from m/s to rpm
+ */
+double convertToRPM(int value, double wheelDiameter) {
+	return value / (2 * M_PI * wheelDiameter * 2.54) * (100 * 2 * 60.0);
+}
+
+/**
+ * Calculates dot product of two vectors
+ */
+double dot(vector<double> a, vector<double> b) {
+	return a[0] * b[0] + a[1] * b[1];
+}

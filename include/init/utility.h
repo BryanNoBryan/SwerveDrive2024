@@ -6,6 +6,9 @@
 
 #include <cmath>
 #include <string>
+#include <vector>
+
+using namespace std;
 
 extern std::string robot_problems;
 
@@ -67,5 +70,46 @@ double angleWrap(double degrees);
 * @return the difference between the two specified angles, shifted to the range -pi to pi
 */
 double calcAngleDiff(double angle1, double angle2);
+
+/**
+ * @brief Calculates the distance between two points represented by vectors
+ * 
+ * @param currentPosition the first point represented by a vector
+ * @param lookAheadPosition the second point represented by a vector
+ * 
+ * @return the distance between the two points as a double
+ */
+double distanceFormula(vector<double> currentPosition, vector<double> lookAheadPosition);
+
+/**
+ * @brief Converts a speed in meters per second to a speed in rotations per minute
+ *
+ * @param value the speed in meters per second as an double
+ * @param wheelDiameter the diameter of the wheel in inches
+ * 
+ * @return the speed in rotations per minute
+ */
+double convertToRPM(double value, double wheelDiameter);
+
+
+/**
+ * @brief Converts a speed in meters per second to a speed in rotations per minute
+ *
+ * @param value the speed in meters per second as an integer
+ * @param wheelDiameter the diameter of the wheel in inches
+ * 
+ * @return the speed in rotations per minute
+ */
+double convertToRPM(int value, double wheelDiameter);
+
+/**
+ * @brief Calculates the dot product of two vectors
+ * 
+ * @param a the first vector
+ * @param b the second vector
+ * 
+ * @return the dot product of the two vectors as a double
+ */
+double dot(vector<double> a, vector<double> b);
 
 #endif

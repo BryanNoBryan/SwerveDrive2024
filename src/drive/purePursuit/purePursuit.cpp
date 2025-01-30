@@ -144,13 +144,13 @@ void purePursuit::run(vector<PPoint> path) {
         double yVel = (pos.y - purePursuit::lastPosition[1]) * (1000.0 / (chrono::steady_clock::now() - loopTime).count());
         double thetaVel = (pos.theta - purePursuit::lastPosition[2]) * (1000.0 / (chrono::steady_clock::now() - loopTime).count());
 
-        purePursuit::curXVel += xPID.update(xSpeed - xVel);
-        purePursuit::curYVel += yPID.update(ySpeed - yVel);
-        purePursuit::curThetaVel += thetaPID.update(thetaVel - turnSpeed);
+        purePursuit::curXVel += xPID.update(path[pointer].x - pos.x);
+        purePursuit::curYVel += yPID.update(path[pointer].y - pos.y);
+        purePursuit::curThetaVel += thetaPID.update(path[pointer].theta - pos.theta);
 
-        purePursuit::curXVel = purePursuit::limitValue(curXVel, 0, -1, 0, 0.5);
-        purePursuit::curYVel = purePursuit::limitValue(curYVel, 0, -1, 0, 0.5);
-        purePursuit::curThetaVel = purePursuit::limitValue(curThetaVel, 0, -1, 0, 0.5);
+        purePursuit::curXVel = purePursuit::limitValue(curXVel, 0, -0.5, 0, 0.5);
+        purePursuit::curYVel = purePursuit::limitValue(curYVel, 0, -0.5, 0, 0.5);
+        purePursuit::curThetaVel = purePursuit::limitValue(curThetaVel, 0, -0.5, 0, 0.5);
 
         printf("Current X Velocity: %f\n", curXVel);
         printf("Current Y Velocity: %f\n", curYVel);
