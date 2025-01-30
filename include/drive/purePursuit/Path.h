@@ -10,6 +10,7 @@
 #include "init/utility.h"
 #include "drive/SwerveDrive.h"
 #include "serial/serial_comm.h"
+#include "drive/purePursuit/Pose.h"
 
 
 
