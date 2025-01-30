@@ -13,6 +13,7 @@
 #include "drive/purePursuit/Pose.h"
 #include "drive/purePursuit/Path.h"
 #include "drive/purePursuit/Timer.h"
+#include "drive/purePursuit/PID.h"
 
 
 

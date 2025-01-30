@@ -14,15 +14,23 @@ class CheckpointPursuit {
     };
 
     void run() {
+        PID pid(1, 0, 0, 0);
         //the vector that we need to traverse to finish the path
         Pose diffPose = path.end_pos.vectorDiff(path.start_pos);
+        double headingOfVector = atan2(diffPose.y, diffPose.x);
 
+        double error = headingOfVector - otos_data[2];
+        while (error > 10) { //degrees
+            error = headingOfVector - otos_data[2];
+            driveTrain.move(0,0, pid.update(error), 1);
+        }
+        
+        
         // 1. move heading in direction of vector
-
+        // PID(1, 0, 0, 0).update(diffPose.getTheta());
 
 
         // 2. move to end_pos
-
 
 
         // 3. move heading to final_pos
