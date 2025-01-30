@@ -15,11 +15,12 @@
 using namespace std;
 
 class Timer {
-    double start_time;
+    public:
+        double start_time;
 
-    void start();
+        void start();
 
-    double elapsed_time();
+        double elapsed_time();
 };
 
 #endif
