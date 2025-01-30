@@ -1,13 +1,9 @@
 #include "drive/purePursuit/Timer.h"
 
-class Timer {
-    double start_time;
+void Timer::start() {
+    start_time = pros::millis();
+}
 
-    double start() {
-        
-    }
-
-    double elapsed_time() {
-
-    }
-};
+double Timer::elapsed_time() {
+    return pros::millis() - start_time;
+}

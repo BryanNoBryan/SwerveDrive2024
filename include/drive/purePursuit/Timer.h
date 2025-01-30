@@ -12,6 +12,14 @@
 #include "serial/serial_comm.h"
 #include "drive/purePursuit/Pose.h"
 
+using namespace std;
 
+class Timer {
+    double start_time;
+
+    void start();
+
+    double elapsed_time();
+};
 
 #endif
