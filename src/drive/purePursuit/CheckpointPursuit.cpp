@@ -13,7 +13,7 @@
         PID pid(1, 0, 0, 0);
         //the vector that we need to traverse to finish the path
         Pose diffPose = path.end_pos.vectorDiff(path.start_pos);
-        double headingOfVector = atan2(diffPose.y, diffPose.x);
+        double headingOfVector = angleWrap(atan2(diffPose.y, diffPose.x)*180/M_PI);
 
         double error = headingOfVector - otos_data[2];
         while (error > 10) { //degrees
