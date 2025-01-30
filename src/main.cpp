@@ -25,6 +25,7 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 
+    // imu.reset();
     controller.rumble(".");
 
     // Start serial on desired port
@@ -41,12 +42,13 @@ void initialize() {
             // rxtx_enable.set_value(true);
             //pros::Task arduinoData(serial_read);
             // print robot location to the brain screen
-            pros::lcd::print(0, "PosX %4.2f PosY %4.2f PosH %4.2f", otos_data[0], otos_data[1], otos_data[2]);
-            pros::lcd::print(1, "VelX %4.2f VelY %4.2f VelH %4.2f", otos_data[3], otos_data[4], otos_data[5]);
-            pros::lcd::print(2, "AccX %4.2f AccY %4.2f AccH %4.2f", otos_data[6], otos_data[7], otos_data[8]);
+            pros::lcd::print(0, "PosX %4.2f PosY %4.2f PosH %4.2f", -otos_data[0], -otos_data[1], -otos_data[2]);
+            // pros::lcd::print(1, "VelX %4.2f VelY %4.2f VelH %4.2f", otos_data[3], otos_data[4], otos_data[5]);
+            // pros::lcd::print(2, "AccX %4.2f AccY %4.2f AccH %4.2f", otos_data[6], otos_data[7], otos_data[8]);
             //pros::lcd::print(4, "%s", max485_data.substr(0, max485_data.size()/3));
             //pros::lcd::print(5, "%s", max485_data.substr(max485_data.size()/3, max485_data.size()/3));
             //pros::lcd::print(6, "%s", max485_data.substr(2 * max485_data.size() / 3, max485_data.size() / 3));
+            // pros::lcd::print(1, "IMU: %4.2f", imu.get_rotation());
             // delay to save resources
             pros::delay(50);
         } });

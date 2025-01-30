@@ -31,7 +31,7 @@ void purePursuit::run(vector<PPoint> path) {
     purePursuit::thetaPID.reset();
 
     rxtx_enable.set_value(true);
-    serial_read(NULL);
+    serial_read(nullptr);
 
     printf("%d\n", path.size());
     printf("%.3f\n", path[0].x);
@@ -41,10 +41,15 @@ void purePursuit::run(vector<PPoint> path) {
     // pros::lcd::print(0, "PosX %4.2f PosY %4.2f PosH %4.2f", otos_data[0], otos_data[1], otos_data[2]);
     printf("PosX %4.2f PosY %4.2f PosH %4.2f\n", otos_data[0], otos_data[1], otos_data[2]);
 
-    lemlib::Pose pos(-otos_data[0], -otos_data[1], otos_data[2]);
+    lemlib::Pose pos(-otos_data[0], -otos_data[1], -otos_data[2]*M_PI/180);
 
     path.insert(path.begin(), PPoint(pos.x, pos.y, pos.theta));
     purePursuit::lastPosition = vector<double> {pos.x, pos.y, pos.theta};
+
+    printf("%d\n", path.size());
+    printf("%.3f\n", path[0].x);
+    printf("%.3f\n", path[0].y);
+    printf("%.3f\n", path[0].theta);
 
     bool overshot = false;
 
@@ -55,7 +60,7 @@ void purePursuit::run(vector<PPoint> path) {
         rxtx_enable.set_value(true);
         serial_read(nullptr);
 
-        lemlib::Pose pos(-otos_data[1], -otos_data[0], otos_data[2]*M_PI/180);
+        lemlib::Pose pos(-otos_data[0], -otos_data[1], -otos_data[2]*M_PI/180);
 
         printf("PosX %4.2f PosY %4.2f PosH %4.2f\n", pos.x, pos.y, pos.theta);
 
@@ -92,7 +97,7 @@ void purePursuit::run(vector<PPoint> path) {
 
             // Set field centric speed
             xSpeed = x * cos(pos.theta) - y * sin(pos.theta);
-            xSpeed = y * cos(pos.theta) + x * sin(pos.theta);
+            ySpeed = y * cos(pos.theta) + x * sin(pos.theta);
 
             // Always use this if statement
             overshot = true;
@@ -109,11 +114,9 @@ void purePursuit::run(vector<PPoint> path) {
             ySpeed = speed * cos(path[pointer].theta);
         }
 
-        double relativePointAngle;
+        double relativePointAngle, angleToPoint;
         // Checks if the target is the last point in the path or if we have already passed the last point
         if (path[pointer].strafe && ((target[0] == path[path.size() - 1].x && target[1] == path[path.size() - 1].y && !error) || overshot || path[pointer].fieldCentric)) {
-            double angleToPoint;
-
             if (purePursuit::endTheta == 1000) {
                 // Target the angle for robot to "follow line" with the path offset
                 angleToPoint = atan2(path[pointer - 1].x - path[pointer - 2].x, path[pointer - 1].y - path[pointer - 2].y) + path[pointer].theta;
@@ -121,16 +124,16 @@ void purePursuit::run(vector<PPoint> path) {
                 // Target the ending theta
                 angleToPoint = endTheta;
             }
-            relativePointAngle = -purePursuit::angleWrap(angleToPoint + pos.theta);
+            // relativePointAngle = -purePursuit::angleWrap(angleToPoint + pos.theta);
             
             overshot = true;
         } else {
             // Calculate angle for robot to follow the line
-            double angleToPoint = atan2(target[0] - pos.x, target[1] - pos.y) + path[pointer].theta;
-            relativePointAngle = -purePursuit::angleWrap(angleToPoint + pos.theta);
+            angleToPoint = atan2(target[0] - pos.x, target[1] - pos.y) + path[pointer].theta;
+            // relativePointAngle = -purePursuit::angleWrap(angleToPoint + pos.theta);
         }
 
-        double turnSpeed = purePursuit::limitValue(relativePointAngle / 70.0, 0, -path[pointer].turnSpeed, 0, path[pointer].turnSpeed);
+        double turnSpeed = purePursuit::limitValue(angleToPoint / 70.0, 0, -path[pointer].turnSpeed, 0, path[pointer].turnSpeed);
 
         // Sets the max velocity of the robot (x and y in inches, angle in degrees)
         xSpeed *= 24;
@@ -149,23 +152,23 @@ void purePursuit::run(vector<PPoint> path) {
         purePursuit::curYVel = purePursuit::limitValue(curYVel, 0, -1, 0, 0.5);
         purePursuit::curThetaVel = purePursuit::limitValue(curThetaVel, 0, -1, 0, 0.5);
 
-        // printf("Current Y Position: %f", pos.y);
-
         printf("Current X Velocity: %f\n", curXVel);
         printf("Current Y Velocity: %f\n", curYVel);
         printf("Current Theta Velocity: %f\n", curThetaVel);
 
         //chassis.arcade(curYVel * 127, curThetaVel * 127);
-        purePursuit::sDrive.move(-curYVel, 0, 0, 1);
+        purePursuit::sDrive.move(-curYVel, -curXVel, -curThetaVel, 1);
 
         // Is the path finished?
         double xError = path[path.size() - 1].x - pos.x;
         double yError = path[path.size() - 1].y - pos.y;
-        double thetaError = endTheta - pos.theta;
+        double thetaError = path[path.size() - 1].theta - pos.theta;
 
+        printf("path-1.x %f, path-1.y %f, path-1.theta %f\n", path[path.size() - 1].x, path[path.size() - 1].y, path[path.size() - 1].theta);
+        printf("PosX %4.2f PosY %4.2f PosH %4.2f\n", pos.x, pos.y, pos.theta);
         printf("X Error: %f\n", xError);
         printf("Y Error: %f\n", yError);
-        printf("Theta Error: %f\n", thetaError);
+        printf("Theta Error: %f\n\n\n", thetaError);
 
         // Check theta
         bool theta = false;
@@ -181,7 +184,7 @@ void purePursuit::run(vector<PPoint> path) {
             purePursuit::endCount = 0;
         }
 
-        purePursuit::lastPosition = vector<double> {pos.x, pos.y, pos.theta};
+        purePursuit::lastPosition = vector<double>{pos.x, pos.y, pos.theta};
         loopTime = chrono::steady_clock::now();
 
         pros::delay(10);

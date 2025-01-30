@@ -1,5 +1,4 @@
 #include "autons/matchAuton.h"
-#include "drive/purePursuit/purePursuit.h"
 
 void matchAuton(){
     leftFrontTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
@@ -14,10 +13,20 @@ void matchAuton(){
     purePursuit purePursuit;
     
     vector<PPoint> path = vector<PPoint>();
-    path.push_back(PPoint(12.0, 0, 0.0));
+    path.push_back(PPoint(0, 12.0, 0.0));
     // path.push_back(PPoint(-40.0, 24.0, 0.0));
     // path.push_back(PPoint(-80.0, 40.0, 0.0));
     // path.push_back(PPoint(-80.0, 80.0, 0.0));
     
     purePursuit.runPath(path);
+
+    // SwerveDrive sdrive;
+
+    // sdrive.move(-0.8, 0, 0, 1);
+    // pros::delay(2000);
+
+    // sdrive.move(0, 0, 0.0001, 1);
+    // pros::delay(100);
+
+    // sdrive.move(0, 0, 0, 1);
 }

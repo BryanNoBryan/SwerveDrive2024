@@ -244,17 +244,7 @@ void driveControl()
 
         fwd *= -1;
         str *= -1;
-       
-
-        // double robotHeading = -otos_data[2] * M_PI/180;
-        // double desiredDirection = atan2f(fwd, str) - M_PI/2;
-        // double relativeDirection = -calcAngleDiff(desiredDirection, robotHeading);
-
-        // double magnitude = sqrt(fwd*fwd+str*str);
-
-        // double relFwd = magnitude * sin(relativeDirection);
-        // double relStr = magnitude * cos(relativeDirection);
-
+    
         // Scoring controls
         intakeIn = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
         intakeOut = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
@@ -297,7 +287,7 @@ void driveControl()
 
 		//swerve drive!!!!
         if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
-            sdrive.move(0, 0, 0.005, 1);
+            sdrive.move(0, 0, 0.01, 1);
             idle = true;
         }else if(fwd == 0 && str == 0 && rcw == 0 && idle){
             sdrive.move(0, 0, 0, 1);
@@ -339,10 +329,6 @@ void driveControl()
         else {
             IntakeController().stop(NULL);
         }
-
-        pros::lcd::print(5, "Toggle Time: %d", timer-lastToggleTime);
-        pros::lcd::print(6, "Mogo Clamp: %d", clampState);
-        pros::lcd::print(7, "Mogo Distance: %d", mogoOptical.get_proximity());
 
         //Toggle Mogo Clamp
         if(toggleClamp && !lastToggle) {

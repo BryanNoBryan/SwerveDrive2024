@@ -6,6 +6,8 @@
 #include "api.h"
 #include "init/devices.h"
 #include "init/utility.h"
+#include "drive/SwerveDrive.h"
+#include "drive/purePursuit/purePursuit.h"
 
 void matchAuton();
 

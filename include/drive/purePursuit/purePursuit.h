@@ -36,9 +36,9 @@ class purePursuit{
         double curYVel = 0;
         double curThetaVel = 0;
 
-        lemlib::PID xPID = lemlib::PID(0.1, 0, 0);
-        lemlib::PID yPID = lemlib::PID(0.1, 0, 0);
-        lemlib::PID thetaPID = lemlib::PID(0.0001, 0, 0);
+        lemlib::PID xPID = lemlib::PID(10, 0, 0);
+        lemlib::PID yPID = lemlib::PID(10, 0, 0);
+        lemlib::PID thetaPID = lemlib::PID(10, 0, 0);
 
         double endTheta;
         // Tolerance of 2 inches in x and y and 3 degress in theta

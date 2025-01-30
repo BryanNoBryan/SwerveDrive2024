@@ -7,9 +7,9 @@
 class PPoint {
     public:
         double x, y, theta;
-        bool strafe = false;
+        bool strafe = true;
         double radius = 10;
-        double maxSpeed = 1, turnSpeed = 0.6;
+        double maxSpeed = 0.9, turnSpeed = 0.4;
         bool fieldCentric = false;
 
         PPoint(double inputX, double inputY, double inputTheta) {x = inputX; y = inputY; theta = inputTheta;};

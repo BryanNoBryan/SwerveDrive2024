@@ -10,7 +10,7 @@ const double R = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
 lemlib::PID testPID(1, 0, 0, 10, false);
 
-const double rotKP = 0.4;
+const double rotKP = 1;
 const double rotKI = 0;
 const double rotKD = 0;
 
