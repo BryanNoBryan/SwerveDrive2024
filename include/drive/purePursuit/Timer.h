@@ -1,5 +1,5 @@
-#ifndef _CHECKPOINT_PURSUIT
-#define _CHECKPOINT_PURSUIT
+#ifndef _TIMER
+#define _TIMER
 
 #define PROS_USE_SIMPLE_NAMES
 #define PROS_USE_LITERALS

@@ -7,11 +7,10 @@ class CheckpointPursuit {
     CheckpointPursuit(Path path) : path(path) {};
 
     void run() {
-
-
+        
     }
 
     bool finished() {
-
+        
     }
 }

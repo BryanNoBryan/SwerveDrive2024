@@ -1,5 +1,5 @@
-#ifndef _PATH
-#define _PATH
+#ifndef _PATH_
+#define _PATH_
 
 #define PROS_USE_SIMPLE_NAMES
 #define PROS_USE_LITERALS
