@@ -11,6 +11,8 @@
 #include "drive/SwerveDrive.h"
 #include "serial/serial_comm.h"
 #include "drive/purePursuit/Pose.h"
+#include "drive/purePursuit/Path.h"
+#include "drive/purePursuit/Timer.h"
 
 
 

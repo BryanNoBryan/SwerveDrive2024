@@ -17,6 +17,7 @@ class Pose {
         double getY();
         double getTheta();
         double distanceFrom(Pose pose);
+        Pose vectorDiff(Pose pose);
 };
 
 #endif

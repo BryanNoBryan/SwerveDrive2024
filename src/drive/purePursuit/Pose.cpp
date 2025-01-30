@@ -15,3 +15,10 @@ double Pose::distanceFrom(Pose pose) {
     double diff_y = pose.getY() - y;
     return pow(pow(diff_x,2)+pow(diff_x,2) , 0.5);
 }
+
+Pose Pose::vectorDiff(Pose pose) {
+    double diff_x = pose.getX() - x;
+    double diff_y = pose.getY() - y;
+    double diff_theta = pose.getTheta() - theta;
+    return Pose(diff_x, diff_y, diff_theta);
+}
