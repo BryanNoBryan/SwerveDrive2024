@@ -12,6 +12,23 @@
 #include "serial/serial_comm.h"
 #include "drive/purePursuit/Pose.h"
 
+#define REACHED_MARGIN 10
 
+class Path {
+    Pose start_pos;
+    Pose end_pos;
+    bool use_heading;
+
+    Path(Pose start_pos, Pose end_pos, bool use_heading) :
+    start_pos(start_pos),
+    end_pos(end_pos),
+    use_heading(use_heading) {}
+
+    Pose current_pos();
+    bool reachedTarget();
+
+    //Return the current reference position based on the given motion profile times, maximum acceleration, velocity, and current time
+    double motion_profile(double max_acceleration, double max_velocity, double distance, double elapsed_time);
+};
 
 #endif
