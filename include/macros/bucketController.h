@@ -25,6 +25,7 @@ public:
     double targetPos;
 
     static constexpr double maximumPos = 220;
+    static constexpr double middlePos = 80;
 
     /**
      * @brief Get current position, 0 is in, + is out
@@ -63,5 +64,6 @@ public:
 };
 constexpr BucketPos BUCKET_IN(0);
 constexpr BucketPos BUCKET_OUT(1);
+constexpr BucketPos BUCKET_MIDDLE(2);
 
 #endif
