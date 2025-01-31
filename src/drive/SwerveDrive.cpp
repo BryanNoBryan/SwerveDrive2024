@@ -10,14 +10,14 @@ const double R = sqrt(pow(TRACK_LENGTH, 2) + pow(TRACK_WIDTH, 2));
 
 lemlib::PID testPID(1, 0, 0, 10, false);
 
-const double rotKP = 1;
+const double rotKP = 1.5;
 const double rotKI = 0;
 const double rotKD = 0;
 
-lemlib::PID rightFrontPID (rotKP, rotKI, rotKD, 5, false);
-lemlib::PID leftFrontPID (rotKP, rotKI, rotKD, 5, false);
-lemlib::PID leftBackPID (rotKP, rotKI, rotKD, 5, false);
-lemlib::PID rightBackPID (rotKP, rotKI, rotKD, 5, false);
+lemlib::PID rightFrontPID (0.7, rotKI, rotKD, 10, false);
+lemlib::PID leftFrontPID (1.3, rotKI, rotKD, 10, false);
+lemlib::PID leftBackPID (0.8, rotKI, rotKD, 10, false);
+lemlib::PID rightBackPID (1, rotKI, rotKD, 10, false);
 
 SwerveDrive::SwerveDrive() :
     rightFront(&rightFrontTopMotor, &rightFrontBottomMotor, &rightFrontEncoder, rightFrontPID, true),

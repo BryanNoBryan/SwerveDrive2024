@@ -176,14 +176,23 @@
  */
 void driveControl()
 {
-    // leftFrontTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // leftFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // rightFrontTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // rightFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // leftBackTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // leftBackBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // rightBackTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
-    // rightBackBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    // leftFrontTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // leftFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // rightFrontTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // rightFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // leftBackTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // leftBackBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // rightBackTopMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    // rightBackBottomMotor.set_brake_mode(MOTOR_BRAKE_BRAKE);
+
+    leftFrontTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    leftFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightFrontTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightFrontBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    leftBackTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    leftBackBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightBackTopMotor.set_brake_mode(MOTOR_BRAKE_COAST);
+    rightBackBottomMotor.set_brake_mode(MOTOR_BRAKE_COAST);
 
     intake.set_brake_mode(MOTOR_BRAKE_COAST);
     liftLeft.set_brake_mode(MOTOR_BRAKE_BRAKE);
@@ -238,12 +247,12 @@ void driveControl()
         rcw *= -1;
 
         // Field centric
-        double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
-        str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
-        fwd = temp;
+        // double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
+        // str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
+        // fwd = temp;
 
-        fwd *= -1;
-        str *= -1;
+        // fwd *= -1;
+        // str *= -1;
     
         // Scoring controls
         intakeIn = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);

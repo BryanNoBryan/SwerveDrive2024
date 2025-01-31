@@ -23,21 +23,23 @@ void matchAuton(){
 
     // SwerveDrive sdrive;
 
-    // sdrive.move(-0.8, 0, 0, 1);
+    // sdrive.move(0.2, 0, 0, 1);
+    // pros::delay(5000);
+
+    // sdrive.move(0.25, 0, 0, 1);
     // pros::delay(2000);
 
-    // sdrive.move(0, 0, 0.0001, 1);
-    // pros::delay(100);
+    // sdrive.move(0, 0, 0.01, 1);
+    // pros::delay(200);
 
     // sdrive.move(0, 0, 0, 1);
 
-    Pose target(15, 15, 45);
-    Pose current_pos = Pose::current_pos();
-    Path path(current_pos, target, true);
-    CheckpointPursuit auton(path);
-    auton.run();
-    while (!auton.finished()) {}
-
+    // Pose target(15, 15, 45);
+    // Pose current_pos = Pose::current_pos();
+    // Path path(current_pos, target, true);
+    // CheckpointPursuit auton(path);
+    // auton.run();
+    // while (!auton.finished()) {}
 
     // PathFollowing()
     //     .withPath({{otos_data[0], otos_data[1], otos_data[2]}, {12, otos_data[1], otos_data[2]}}, 1)
@@ -45,4 +47,25 @@ void matchAuton(){
     //     .withLimits(10, 20)
     //     .withThresholdErrors(0.5, 0.05)
     //     .ppMove();
+
+
+    leftFrontTopMotor.move(50);
+    leftFrontBottomMotor.move(-50);
+    rightFrontTopMotor.move(50);
+    rightFrontBottomMotor.move(-50);
+    leftBackTopMotor.move(50);
+    leftBackBottomMotor.move(-50);
+    rightBackTopMotor.move(60);
+    rightBackBottomMotor.move(-60);
+    pros::delay(2000);
+
+    leftFrontTopMotor.move(0);
+    leftFrontBottomMotor.move(0);
+    rightFrontTopMotor.move(0);
+    rightFrontBottomMotor.move(0);
+    leftBackTopMotor.move(0);
+    leftBackBottomMotor.move(0);
+    rightBackTopMotor.move(0);
+    rightBackBottomMotor.move(0);
+
 }
