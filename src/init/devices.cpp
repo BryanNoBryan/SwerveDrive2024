@@ -11,7 +11,7 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Left Front
 pros::Motor leftFrontTopMotor(11, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
-pros::Motor leftFrontBottomMotor(14, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor leftFrontBottomMotor(8, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
 
 // Left Back
 pros::Motor leftBackTopMotor(13, pros::v5::MotorGears::blue, pros::v5::MotorEncoderUnits::degrees);
@@ -45,7 +45,7 @@ pros::Rotation leftBackEncoder(-6);
 pros::Rotation rightFrontEncoder(10);
 pros::Rotation rightBackEncoder(-7);
 
-pros::Imu imu(8);
+pros::Imu imu(14);
 
 pros::Optical mogoOptical(12);
 
