@@ -308,17 +308,18 @@ void driveControl()
         // sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
 
 
-        //Lift controls
+        //Lift and Bucket controls
+        bucketController.update();
         liftController.update();
         if (liftUp) {
             liftController.goToHeight(LIFT_UP.getHeight());
+            bucketController.goToPosition(BUCKET_MIDDLE.getPos());
         }
         else if (liftDown) {
             liftController.goToHeight(LIFT_DOWN.getHeight());
+            bucketController.goToPosition(BUCKET_IN.getPos());
         }
 
-        //Bucket controls
-        bucketController.update();
         if (score) {
             bucketController.goToPosition(BUCKET_OUT.getPos());
         }

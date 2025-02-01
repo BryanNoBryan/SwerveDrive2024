@@ -32,6 +32,7 @@ double BucketPos::getPos() const {
     switch (index) {
         case BUCKET_IN: return 0;
         case BUCKET_OUT: return BucketController::maximumPos;
+        case BUCKET_MIDDLE: return BucketController::middlePos;
         default: return 0;
     }
 }
