@@ -10,10 +10,11 @@ theta(theta) { //THETA DEFINED IN DEGREES
 double Pose::getX() {return x;}
 double Pose::getY() {return y;}
 double Pose::getTheta() {return theta;}
+
 double Pose::distanceFrom(Pose pose) {
     double diff_x = pose.getX() - x;
     double diff_y = pose.getY() - y;
-    return pow(pow(diff_x,2)+pow(diff_y,2) , 0.5);
+    return pow(pow(diff_x,2)+pow(diff_y,2), 0.5);
 }
 
 Pose Pose::vectorDiff(Pose pose) {
@@ -28,5 +29,8 @@ double Pose::length() {
 }
 
 Pose Pose::current_pos() {
-    return Pose(otos_data[0], otos_data[1], otos_data[2]);
+    rxtx_enable.set_value(HIGH);
+    serial_read(nullptr);
+
+    return Pose(-otos_data[0], -otos_data[1], -otos_data[2]);
 }

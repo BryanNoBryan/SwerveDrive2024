@@ -1,28 +1,37 @@
 #include "drive/purePursuit/Path.h"
 
 Pose Path::current_pos() {
-    return Pose(otos_data[0], otos_data[1], otos_data[2]);
+    rxtx_enable.set_value(HIGH);
+    serial_read(nullptr);
+
+    return Pose(-otos_data[0], -otos_data[1], -otos_data[2]);
 }
 
-bool Path::reachedTarget() {
-    return current_pos().distanceFrom(end_pos) < REACHED_MARGIN;
+bool Path::reachedTarget(Pose current_pos) {
+    printf("distance %f\n", current_pos.distanceFrom(end_pos));
+    return current_pos.distanceFrom(end_pos) < REACHED_MARGIN;
 }
 
 //Return the current reference position based on the given motion profile times, maximum acceleration, velocity, and current time
 double Path::motion_profile(double max_acceleration, double max_velocity, double distance, double elapsed_time) {
+
+    if(distance < 0){
+        max_velocity *= -1;
+        max_acceleration *= -1;
+    }
 
     // Calculate the time it takes to accelerate to max velocity
     double acceleration_dt = max_velocity / max_acceleration;
 
     // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
     double halfway_distance = distance / 2;
-    double acceleration_distance = pow(0.5 * max_acceleration * acceleration_dt, 2);
+    double acceleration_distance = 0.5 * max_acceleration * pow(acceleration_dt, 2);
 
     if (acceleration_distance > halfway_distance) {
         acceleration_dt = sqrt(halfway_distance / (0.5 * max_acceleration));
     }
 
-    acceleration_distance = pow(0.5 * max_acceleration * acceleration_dt, 2);
+    acceleration_distance = 0.5 * max_acceleration * pow(acceleration_dt, 2);
 
     // recalculate max velocity based on the time we have to accelerate and decelerate
     max_velocity = max_acceleration * acceleration_dt;
@@ -44,12 +53,12 @@ double Path::motion_profile(double max_acceleration, double max_velocity, double
     // if we're accelerating
     if (elapsed_time < acceleration_dt) {
         // use the kinematic equation for acceleration
-        return pow(0.5 * max_acceleration * elapsed_time, 2);
+        return 0.5 * max_acceleration * pow(acceleration_dt, 2);
     }
 
     // if we're cruising
     else if (elapsed_time < deceleration_time) {
-        acceleration_distance = pow(0.5 * max_acceleration * acceleration_dt, 2);
+        acceleration_distance = 0.5 * max_acceleration * pow(acceleration_dt, 2);
         double cruise_current_dt = elapsed_time - acceleration_dt;
 
         // use the kinematic equation for constant velocity
@@ -58,11 +67,11 @@ double Path::motion_profile(double max_acceleration, double max_velocity, double
 
     // if we're decelerating
     else {
-        acceleration_distance = pow(0.5 * max_acceleration * acceleration_dt, 2);
+        acceleration_distance = 0.5 * max_acceleration * pow(acceleration_dt, 2);
         cruise_distance = max_velocity * cruise_dt;
         deceleration_time = elapsed_time - deceleration_time;
 
         // use the kinematic equations to calculate the instantaneous desired position
-        return acceleration_distance + cruise_distance + max_velocity * deceleration_time - pow(0.5 * max_acceleration * deceleration_time, 2);
+        return acceleration_distance + cruise_distance + max_velocity * deceleration_time - 0.5 * max_acceleration * pow(acceleration_dt, 2);
     }
 }

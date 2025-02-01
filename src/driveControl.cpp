@@ -247,12 +247,12 @@ void driveControl()
         rcw *= -1;
 
         // Field centric
-        // double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
-        // str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
-        // fwd = temp;
+        double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
+        str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
+        fwd = temp;
 
-        // fwd *= -1;
-        // str *= -1;
+        fwd *= -1;
+        str *= -1;
     
         // Scoring controls
         intakeIn = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);

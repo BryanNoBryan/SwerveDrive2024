@@ -37,10 +37,10 @@ pros::Motor liftRight(9, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnit
 
 pros::MotorGroup lift({-4, 9}, pros::v5::MotorGears::green, pros::v5::MotorEncoderUnits::degrees);
 
-pros::Motor bucket(2, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
+pros::Motor bucket(3, pros::v5::MotorGears::red, pros::v5::MotorEncoderUnits::degrees);
 
 // Sensors
-pros::Rotation leftFrontEncoder(1);
+pros::Rotation leftFrontEncoder(2);
 pros::Rotation leftBackEncoder(-6);
 pros::Rotation rightFrontEncoder(10);
 pros::Rotation rightBackEncoder(-7);

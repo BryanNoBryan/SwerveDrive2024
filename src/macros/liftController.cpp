@@ -32,8 +32,8 @@ void LiftController::update() {
         rightPower = 0;
     }
 
-    liftLeft.move(leftPower);
-    liftRight.move(rightPower);
+    liftLeft.move(leftPower + 5);
+    liftRight.move(rightPower + 5);
 }
 
 double LiftHeight::getHeight() const {

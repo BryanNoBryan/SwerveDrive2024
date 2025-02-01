@@ -17,13 +17,15 @@
 
 class CheckpointPursuit {
     public: 
-
         Path path;
         Timer timer;
+        bool finishedPath = false;
 
-        CheckpointPursuit(Path path);
+        CheckpointPursuit(Path inputPath){
+            path = inputPath;
+        };
 
-        void run();
+        void run(bool turn = false, bool backwards = false, bool useX = false, bool clamp = false);
         bool finished();
 };
 
