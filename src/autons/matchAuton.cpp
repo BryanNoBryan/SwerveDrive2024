@@ -101,16 +101,16 @@ void matchAuton(){
 
     Timer timer;
     timer.start();
-    while (timer.elapsed_time() < 600) {
-        sdrive.move(-0.15, 0, 0, 1);
+    while (timer.elapsed_time() < 950) {
+        sdrive.move(-0.17, 0, 0, 1);
     }
 
     sdrive.move(0, 0, 0, 1);
     pros::delay(500);
 
     timer.start();
-    while (timer.elapsed_time() < 2550) {
-        sdrive.move(0, -0.13, 0, 1);
+    while (timer.elapsed_time() < 2800) {
+        sdrive.move(0, -0.14, 0, 1);
     }
 
     sdrive.move(0, 0, 0, 1);
@@ -120,7 +120,7 @@ void matchAuton(){
     
     timer.start();
     while (timer.elapsed_time() < 1000) {
-        liftController.goToHeight(20);
+        liftController.goToHeight(30);
         bucketController.goToPosition(BUCKET_MIDDLE.getPos());
         bucketController.update();
         liftController.update();
@@ -150,6 +150,22 @@ void matchAuton(){
     timer.start();
     while (timer.elapsed_time() < 600) {
         sdrive.move(0.15, 0, 0, 1);
+    }
+
+    sdrive.move(0, 0, 0, 1);
+    pros::delay(500);
+
+    timer.start();
+    while (timer.elapsed_time() < 800) {
+        sdrive.move(0, 0.3, 0, 1);
+    }
+
+    sdrive.move(0, 0, 0, 1);
+    pros::delay(500);
+
+    timer.start();
+    while (timer.elapsed_time() < 6000) {
+        sdrive.move(-0.25, 0, 0, 1);
     }
 
     sdrive.move(0, 0, 0, 1);

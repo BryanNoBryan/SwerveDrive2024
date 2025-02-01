@@ -14,7 +14,7 @@ class LiftController
 {
 private:
     // PID Constants
-    static constexpr double kP = 5;
+    static constexpr double kP = 6;
     static constexpr double kI = 0;
     static constexpr double kD = 2;
 

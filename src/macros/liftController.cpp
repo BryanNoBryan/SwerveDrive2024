@@ -30,10 +30,13 @@ void LiftController::update() {
     if (targetHeight == 0 && getHeight() < 1) {
         leftPower = 0;
         rightPower = 0;
+        liftLeft.move(0);
+        liftRight.move(0);
+        return;
     }
 
-    liftLeft.move(leftPower + 5);
-    liftRight.move(rightPower + 5);
+    liftLeft.move(leftPower + 40);
+    liftRight.move(rightPower + 40);
 }
 
 double LiftHeight::getHeight() const {
