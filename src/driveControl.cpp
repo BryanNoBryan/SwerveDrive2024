@@ -199,7 +199,7 @@ void driveControl()
     liftRight.set_brake_mode(MOTOR_BRAKE_BRAKE);
     bucket.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
-    SwerveDrive sdrive;
+    SwerveDrive sDrive;
 
     bool idle = false;
     lemlib::PID headingPID (100, 0, 400, 10, false);
@@ -228,7 +228,10 @@ void driveControl()
     // otos_offset[1] = -otos_data[1];
     // otos_offset[2] = -otos_data[2];
 
-    bool intakeIn, intakeOut, score, toggleClamp, liftUp, liftDown, doink;
+    bool intakeIn, intakeOut, score, toggleClamp, liftUp, liftDown, doink, button_A, button_left;
+    bool prev_A = false, prev_left = false;
+
+    bool field_centric = true;
 
     imu.reset();
 
@@ -245,14 +248,6 @@ void driveControl()
         fwd *= -1;
         str *= -1;
         rcw *= -1;
-
-        // Field centric
-        double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
-        str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
-        fwd = temp;
-
-        fwd *= -1;
-        str *= -1;
     
         // Scoring controls
         intakeIn = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
@@ -263,7 +258,24 @@ void driveControl()
         liftDown =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_B);
         doink = controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y);
 
+        button_A = controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+        button_left =  controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+
         bool resetPosition = controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) && controller.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
+        if (((button_A && !prev_A) && button_left) || ((button_left && !prev_left) && button_A)) {
+            field_centric = !field_centric;
+        }
+
+        if (field_centric) {
+            // Field centric
+            double temp = -fwd*cos(otos_data[2]*M_PI/180) + str*sin(otos_data[2]*M_PI/180);
+            str = -fwd*sin(otos_data[2]*M_PI/180) - str*cos(otos_data[2]*M_PI/180);
+            fwd = temp;
+
+            fwd *= -1;
+            str *= -1;
+        }
 
 		//right joystick scaling
         // int sign = signum(rcw);
@@ -296,12 +308,12 @@ void driveControl()
 
 		//swerve drive!!!!
         if(fwd == 0 && str == 0 && rcw == 0 && !idle) {
-            sdrive.move(0, 0, 0.01, 1);
+            // sDrive.move(0, 0, 0.01, 1);
             idle = true;
         }else if(fwd == 0 && str == 0 && rcw == 0 && idle){
-            sdrive.move(0, 0, 0, 1);
+            sDrive.move(0, 0, 0, 1);
         }else{
-            sdrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
+            sDrive.move(fwd/127.0, str/127.0, rcw/1600.0, 1);
             idle = false;
         }
 
@@ -371,5 +383,7 @@ void driveControl()
 
 		pros::delay(10);
         timer += 10;
+
+        prev_A = button_A, prev_left = button_left;
 	}
 }

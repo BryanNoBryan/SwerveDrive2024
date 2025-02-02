@@ -59,10 +59,6 @@ void SwerveDrive::move(double x, double y, double angle, double power)
     // printf("angle4 %f\n", angle4);
     // printf("\n\n");
 
-    float velocity = pow(pow(otos_data[3], 2)+ pow(otos_data[4], 2), 0.5);
-    
-    maxVel = min(velocity + 0.6, maxVel);
-
     if (maxSpeed > maxVel){
         speed1 = speed1 * (maxVel/maxSpeed);
         speed2 = speed2 * (maxVel/maxSpeed);

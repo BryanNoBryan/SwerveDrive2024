@@ -28,11 +28,11 @@ void initialize() {
     // imu.reset();
     controller.rumble(".");
 
-    // Start serial on desired port
-    vexGenericSerialEnable(SERIALPORT - 1, 0);
+    // // Start serial on desired port
+    // vexGenericSerialEnable(SERIALPORT - 1, 0);
 
-    // Set BAUD rate
-    vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
+    // // Set BAUD rate
+    // vexGenericSerialBaudrate(SERIALPORT - 1, VEX_BAUD_RATE);
 
     //Print to brain's screen
     pros::Task screenTask([&]()
